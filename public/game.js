@@ -54,7 +54,9 @@
       } else if (this.keyboarder.isDown(this.keyboarder.KEYS.RIGHT)) {
         this.angle += 2;
       } else if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
-        vy
+        var angle = ((this.angle - 90) * Math.PI) / 180
+        this.center.x += Math.cos(angle)
+        this.center.y += Math.sin(angle)
       }
     },
     draw: function(screen) {
