@@ -14,6 +14,7 @@
     };
 
     tick();
+
   };
 
   Game.prototype = {
@@ -41,10 +42,6 @@
     this.center = { x: gameSize.x / 2, y: gameSize.y / 2 };
     this.angle = 0;
     this.keyboarder = new Keyboarder();
-    this.vx = 0;
-    this.vy = 0;
-    // this.transformation = this.angle * Math.PI / 180;
-
   };
 
   Player.prototype = {
@@ -53,16 +50,18 @@
         this.angle -= 2;
       } else if (this.keyboarder.isDown(this.keyboarder.KEYS.RIGHT)) {
         this.angle += 2;
-      } else if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
-        var angle = ((this.angle - 90) * Math.PI) / 180
-        this.center.x += Math.cos(angle)
-        this.center.y += Math.sin(angle)
       }
+
+      if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
+       var angle = ((this.angle - 90) * Math.PI) / 180
+       this.center.x += Math.cos(angle)
+       this.center.y += Math.sin(angle)
+     }
+
+
     },
     draw: function(screen) {
-      // screen.save();
-      // screen.setTransform(1,0,0,1,0,0);
-      // screen.translate(x)
+      screen.save()
       screen.fillStyle = 'white';
       screen.translate(this.center.x, this.center.y);
       screen.rotate(this.angle * Math.PI / 180);
@@ -72,9 +71,8 @@
                       this.size.x,
                       this.size.y
                     );
-      screen.translate(this.center.x, this.center.y);
-      screen.rotate(- this.angle * Math.PI / 180);
-      screen.translate(- this.center.x, - this.center.y);
+      screen.restore()
+
     },
     setupRotation: function() {
 
