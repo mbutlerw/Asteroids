@@ -39,8 +39,10 @@
     this.game = game;
     this.size = { x: 15, y: 15};
     this.center = { x: gameSize.x / 2, y: gameSize.y / 2 };
-    this.angle = 16;
+    this.angle = 0;
     this.keyboarder = new Keyboarder();
+    this.vx = 0;
+    this.vy = 0;
     // this.transformation = this.angle * Math.PI / 180;
 
   };
@@ -48,11 +50,11 @@
   Player.prototype = {
     update: function() {
       if (this.keyboarder.isDown(this.keyboarder.KEYS.LEFT)) {
-        this.angle -= 2
+        this.angle -= 2;
       } else if (this.keyboarder.isDown(this.keyboarder.KEYS.RIGHT)) {
-        this.angle += 2
+        this.angle += 2;
       } else if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
-        this.center.y -= 4
+        vy
       }
     },
     draw: function(screen) {
