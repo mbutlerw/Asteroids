@@ -26,6 +26,12 @@
       }
 
       this.bodies = this.bodies.filter(notCollidingWithAnything)
+      this.bodies = this.bodies.filter(function(body) {
+        return body.lifeSpan > 0
+      })
+
+      console.log(bodies)
+
       for (var i = 0; i < this.bodies.length; i++) {
         this.bodies[i].update()
       }
@@ -50,10 +56,15 @@
     this.angle = 0;
     this.keyboarder = new Keyboarder();
     this.velocity = { x: 0, y: 0};
+    this.overHeated = 0
+    this.lifeSpan = 1
+
   };
 
   Player.prototype = {
     update: function() {
+      if (this.overHeated > 0) {this.overHeated -= 1}
+
       if (this.keyboarder.isDown(this.keyboarder.KEYS.LEFT)) {
         this.angle -= 2;
       } else if (this.keyboarder.isDown(this.keyboarder.KEYS.RIGHT)) {
@@ -67,7 +78,8 @@
      }
 
      if (this.keyboarder.isDown(this.keyboarder.KEYS.SPACE) && this.overHeated === 0) {
-        var bullet = new Bullet({ x: this.center.x, y: this.center.y - this.size.x / 2 }, { x: 0, y: -6})
+        var angle = ((this.angle - 90) * Math.PI) / 180
+        var bullet = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle) * 10, y: Math.sin(angle) * 10})
         this.game.addBody(bullet)
         this.overHeated = 20
       }
@@ -96,13 +108,13 @@
   };
 
   var Asteroid = function(gameSize) {
-    this.size = { x: 50, y: 50};
-    // this.proximityGeneratorX = new proximityGeneratorX(gameSize);
+    this.size = { x: 80, y: 80};
     this.spawnX = randomRangeNotIncluding(0, gameSize.x, ((gameSize.x / 2) - 100), ((gameSize.x / 2) + 100));
     this.spawnY = randomRangeNotIncluding(0, gameSize.y, ((gameSize.y / 2) - 100), ((gameSize.y / 2) + 100));
     this.center = { x: this.spawnX, y: this.spawnY};
     this.angle = 0;
     this.velocity = { x: randomRange(), y: randomRange() };
+    this.lifeSpan = 1
   };
 
   Asteroid.prototype = {
@@ -133,16 +145,19 @@
     this.size = { x: 3, y: 3}
     this.center = center
     this.velocity = velocity
+    this.lifeSpan = 40
   }
 
   Bullet.prototype = {
     update: function () {
+      this.lifeSpan -= 1
       this.center.x += this.velocity.x
       this.center.y += this.velocity.y
 
     },
 
     draw: function(screen) {
+      screen.fillStyle = 'white'
       screen.fillRect(this.center.x - this.size.x / 2,
                       this.center.y - this.size.y / 2,
                       this.size.x,
@@ -193,6 +208,8 @@
   var colliding = function(b1, b2) {
   return !(b1 === b2 ||
            (b1 instanceof Asteroid  && b2 instanceof Asteroid) ||
+           (b1 instanceof Player && b2 instanceof Bullet) ||
+           (b1 instanceof Bullet && b2 instanceof Player) ||
            b1.center.x + b1.size.x / 2 < b2.center.x - b2.size.x / 2 ||
            b1.center.y + b1.size.y / 2 < b2.center.y - b2.size.y / 2 ||
            b1.center.x - b1.size.x / 2 > b2.center.x + b2.size.x / 2 ||
