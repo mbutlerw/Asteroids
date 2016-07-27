@@ -43,6 +43,7 @@
     this.angle = 0;
     this.keyboarder = new Keyboarder();
     this.velocity = { x: 0, y: 0};
+    this.gameSize = gameSize;
   };
 
   Player.prototype = {
@@ -61,6 +62,19 @@
 
      this.center.x += this.velocity.x;
      this.center.y += this.velocity.y;
+
+     if (this.center.x - (this.size.x / 2) > this.gameSize.x) {
+       this.center.x = 0;
+     }
+     if (this.center.x < 0) {
+       this.center.x = this.gameSize.x;
+     }
+     if (this.center.y > this.gameSize.y) {
+       this.center.y = 0;
+     }
+     if (this.center.y < 0) {
+       this.center.y = this.gameSize.y;
+     }
 
     },
 
@@ -82,13 +96,15 @@
   };
 
   var Asteroid = function(gameSize) {
-    this.size = { x: 50, y: 50};
+    var size = randomNumberFromRange(40, 80)
+    this.size = { x: size, y: size };
     // this.proximityGeneratorX = new proximityGeneratorX(gameSize);
     this.spawnX = randomRangeNotIncluding(0, gameSize.x, ((gameSize.x / 2) - 100), ((gameSize.x / 2) + 100));
     this.spawnY = randomRangeNotIncluding(0, gameSize.y, ((gameSize.y / 2) - 100), ((gameSize.y / 2) + 100));
     this.center = { x: this.spawnX, y: this.spawnY};
     this.angle = 0;
     this.velocity = { x: randomRange(), y: randomRange() };
+    this.gameSize = gameSize;
   };
 
   Asteroid.prototype = {
@@ -96,6 +112,18 @@
       this.center.x += this.velocity.x;
       this.center.y += this.velocity.y;
       this.angle += 1;
+      if (this.center.x - (this.size.x / 2) > this.gameSize.x) {
+        this.center.x = 0;
+      }
+      if (this.center.x < 0) {
+        this.center.x = this.gameSize.x;
+      }
+      if (this.center.y > this.gameSize.y) {
+        this.center.y = 0;
+      }
+      if (this.center.y < 0) {
+        this.center.y = this.gameSize.y;
+      }
     },
 
 
@@ -134,6 +162,10 @@
     var num = Math.random();
     num *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
     return num;
+  }
+
+  var randomNumberFromRange = function (min, max) {
+  return Math.random() * (max - min) + min;
   }
 
 
