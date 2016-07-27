@@ -4,7 +4,7 @@
     var screen = canvas.getContext('2d');
     var gameSize = {x: canvas.width, y: canvas.height } ;
 
-    this.bodies = [new Player(this, gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize)];
+    this.bodies = [new Player(this, gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize)];
 
     var self = this;
     var tick = function () {
@@ -67,23 +67,29 @@
       if (this.overHeated > 0) {this.overHeated -= 1}
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.LEFT)) {
-        this.angle -= 2;
+        this.angle -= 4;
       } else if (this.keyboarder.isDown(this.keyboarder.KEYS.RIGHT)) {
-        this.angle += 2;
+        this.angle += 4;
       }
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
        var angle = ((this.angle - 90) * Math.PI) / 180
-       this.velocity.x += Math.cos(angle) * 0.2;
-       this.velocity.y += Math.sin(angle) * 0.2;
+       this.velocity.x += Math.cos(angle) * 0.1;
+       this.velocity.y += Math.sin(angle) * 0.1;
      }
 
      if (this.keyboarder.isDown(this.keyboarder.KEYS.SPACE) && this.overHeated === 0) {
         var angle = ((this.angle - 90) * Math.PI) / 180
-        var bullet = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle) * 10, y: Math.sin(angle) * 10})
+        var bullet = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle) * 10, y: Math.sin(angle) * 10}, this.gameSize)
         this.game.addBody(bullet)
         this.overHeated = 20
       }
+
+
+        this.velocity.x = this.velocity.x * 0.99
+        this.velocity.y = this.velocity.y * 0.99
+
+
 
 
      this.center.x += this.velocity.x;
@@ -169,11 +175,12 @@
     },
   };
 
-  var Bullet = function(center, velocity) {
+  var Bullet = function(center, velocity, gameSize) {
     this.size = { x: 3, y: 3}
     this.center = center
     this.velocity = velocity
     this.lifeSpan = 40
+    this.gameSize = gameSize;
   }
 
   Bullet.prototype = {
@@ -181,6 +188,19 @@
       this.lifeSpan -= 1
       this.center.x += this.velocity.x
       this.center.y += this.velocity.y
+
+      if (this.center.x - (this.size.x / 2) > this.gameSize.x) {
+        this.center.x = 0;
+      }
+      if (this.center.x < 0) {
+        this.center.x = this.gameSize.x;
+      }
+      if (this.center.y > this.gameSize.y) {
+        this.center.y = 0;
+      }
+      if (this.center.y < 0) {
+        this.center.y = this.gameSize.y;
+      }
 
     },
 
@@ -251,6 +271,13 @@
   window.onload = function() {
     new Game("gameCanvas");
   };
+
+  window.addEventListener("keydown", function(e) {
+    // space and arrow keys
+    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+}, false);
 
 
 })();
