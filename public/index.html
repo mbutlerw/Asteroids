@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<h1> Gikénsrg NomÀ JrÀsta</h1>
+
 <canvas id="gameCanvas" width="800" height="600"> </canvas>
 <script src="game.js"></script>
 <style>
@@ -8,65 +8,7 @@
     background-color: black;
   }
 </style>
-<!-- <script>
-var game = function()
-var canvas;
-var canvasContext;
 
-window.onload = function() {
-  canvas = document.getElementById("gameCanvas");
-  canvasContext = canvas.getContext("2d");
-  var framesPerSecond = 60;
-  setInterval(function() {
-    drawEverything();
-    // moveEverything();
-  }, 1000/framesPerSecond);
-}
-
-// HELPERS
-
-function drawEverything() {
-  colorRect(0,0, canvas.width, canvas.height, "black");
-  player();
-}
-
-function colorRect(leftX, topY, width, height, drawColor) {
-  canvasContext.fillStyle = drawColor;
-  canvasContext.fillRect(leftX, topY, width, height);
-}
-
-function player() {
-
-  function drawPlayer() {
-    canvasContext.moveTo(canvas.width/2, canvas.height/2-10);
-    canvasContext.lineTo(canvas.width/2-10, canvas.height/2+10);
-    canvasContext.lineTo(canvas.width/2+10, canvas.height/2+10);
-    canvasContext.lineTo(canvas.width/2, canvas.height/2-10);
-    canvasContext.lineWidth = 2;
-    canvasContext.strokeStyle = "white";
-    canvasContext.stroke();
-  }
-  //
-  // function respondToUserInput() {
-  //   if (this.keyboard.isDown(this.keyboard.KEYS.LEFT)) {
-  //     this.rotateLeft();
-  //   } else if (this.keyboard.isDown(this.keyboard.KEYS.RIGHT)) {
-  //     this.rotateRight();
-  //   }
-  // }
-
-  // function rotateLeft() {
-  //   canvasContext.save();
-  //   canvasContext.rotate(0.17);
-  //   canvasContext.restore();
-  // }
-  //
-  // function rotateRight() {
-
-  // }
-}
-
- </script> -->
   <body>
   </body>
 </html>

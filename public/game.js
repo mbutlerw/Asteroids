@@ -42,6 +42,7 @@
     this.center = { x: gameSize.x / 2, y: gameSize.y / 2 };
     this.angle = 0;
     this.keyboarder = new Keyboarder();
+    this.velocity = { x: 0, y: 0}
   };
 
   Player.prototype = {
@@ -54,10 +55,12 @@
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
        var angle = ((this.angle - 90) * Math.PI) / 180
-       this.center.x += Math.cos(angle)
-       this.center.y += Math.sin(angle)
+       this.velocity.x += Math.cos(angle) * 0.2
+       this.velocity.y += Math.sin(angle) * 0.2
      }
 
+     this.center.x += this.velocity.x
+     this.center.y += this.velocity.y
 
     },
     draw: function(screen) {
