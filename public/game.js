@@ -3,8 +3,10 @@
     var canvas = document.getElementById(canvasID);
     var screen = canvas.getContext('2d');
     var gameSize = {x: canvas.width, y: canvas.height } ;
+    this.gameSize = {x: canvas.width, y: canvas.height } ;
 
     this.bodies = [new Player(this, gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize)];
+
 
     var self = this;
     var tick = function () {
@@ -17,8 +19,21 @@
 
   };
 
+
+
   Game.prototype = {
     update: function() {
+
+      var pnum = 0
+      var anum = 0
+
+      this.bodies.forEach(function (body) {
+        if (body.type == 'player') { pnum += 1}
+        if (body.type == 'asteroid') {anum += 1}
+      })
+
+      if (pnum === 0|| anum === 0) {  this.bodies = [new Player(this, this.gameSize), new Asteroid(this.gameSize), new Asteroid(this.gameSize), new Asteroid(this.gameSize), new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize)]}
+
       var bodies = this.bodies
       var notCollidingWithAnything = function(b1) {
         return bodies.filter(function (b2) { return colliding(b1, b2) }).length === 0
@@ -29,8 +44,6 @@
       this.bodies = this.bodies.filter(function(body) {
         return body.lifeSpan > 0
       })
-
-      console.log(bodies)
 
       for (var i = 0; i < this.bodies.length; i++) {
         this.bodies[i].update()
@@ -50,8 +63,9 @@
 
 
   var Player = function(game, gameSize) {
+    this.type = 'player'
     this.game = game;
-    this.size = { x: 15, y: 15};
+    this.size = { x: 10, y: 20};
     this.center = { x: gameSize.x / 2, y: gameSize.y / 2 };
     this.angle = 0;
     this.keyboarder = new Keyboarder();
@@ -112,15 +126,24 @@
 
     draw: function(screen) {
       screen.save()
-      screen.fillStyle = 'white';
       screen.translate(this.center.x, this.center.y);
       screen.rotate(this.angle * Math.PI / 180);
       screen.translate(-this.center.x, -this.center.y);
-      screen.fillRect(this.center.x - this.size.x / 2,
-                      this.center.y - this.size.y / 2,
-                      this.size.x,
-                      this.size.y
-                    );
+      screen.beginPath();
+      screen.moveTo(this.center.x, this.center.y - 10);
+      screen.lineTo(this.center.x + 5, this.center.y + 10);
+      screen.lineTo(this.center.x - 5, this.center.y + 10);
+      screen.lineTo(this.center.x, this.center.y - 10);
+      screen.strokeStyle = 'white'
+      screen.stroke()
+      if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
+       screen.moveTo(this.center.x + 3, this.center.y + 12)
+       screen.lineTo(this.center.x, this.center.y + 15);
+       screen.lineTo(this.center.x - 3, this.center.y + 12);
+       screen.lineTo(this.center.x + 3, this.center.y + 12);
+       screen.strokeStyle = 'white'
+       screen.stroke()
+      }
       screen.restore()
 
     },
@@ -129,6 +152,7 @@
 
   var Asteroid = function(gameSize) {
     var size = randomNumberFromRange(40, 80)
+    this.type = 'asteroid'
     this.size = { x: size, y: size };
     this.gameSize = gameSize
     this.spawnX = randomRangeNotIncluding(0, gameSize.x, ((gameSize.x / 2) - 100), ((gameSize.x / 2) + 100));
@@ -161,11 +185,11 @@
 
     draw: function(screen) {
       screen.save()
-      screen.fillStyle = 'white';
+      screen.strokeStyle = 'white';
       screen.translate(this.center.x, this.center.y);
       screen.rotate(this.angle * Math.PI / 180);
       screen.translate(-this.center.x, -this.center.y);
-      screen.fillRect(this.center.x - this.size.x / 2,
+      screen.strokeRect(this.center.x - this.size.x / 2,
                       this.center.y - this.size.y / 2,
                       this.size.x,
                       this.size.y
@@ -175,7 +199,9 @@
     },
   };
 
+
   var Bullet = function(center, velocity, gameSize) {
+    this.type = 'bullet'
     this.size = { x: 3, y: 3}
     this.center = center
     this.velocity = velocity
