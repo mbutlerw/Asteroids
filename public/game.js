@@ -4,7 +4,7 @@
     var screen = canvas.getContext('2d');
     var gameSize = {x: canvas.width, y: canvas.height } ;
 
-    this.bodies = [new Player(this, gameSize)];
+    this.bodies = [new Player(this, gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize)];
 
     var self = this;
     var tick = function () {
@@ -25,8 +25,7 @@
     },
     draw: function(screen, gameSize) {
       screen.clearRect(0, 0, gameSize.x, gameSize.y);
-      // screen.fillStyle = 'black';
-      // screen.fillRect(0,0, gameSize.x, gameSize.y);
+
       for (var i = 0; i < this.bodies.length; i++) {
         this.bodies[i].draw(screen);
       }
@@ -36,13 +35,14 @@
     }
   };
 
+
   var Player = function(game, gameSize) {
     this.game = game;
     this.size = { x: 15, y: 15};
     this.center = { x: gameSize.x / 2, y: gameSize.y / 2 };
     this.angle = 0;
     this.keyboarder = new Keyboarder();
-    this.velocity = { x: 0, y: 0}
+    this.velocity = { x: 0, y: 0};
   };
 
   Player.prototype = {
@@ -55,14 +55,15 @@
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
        var angle = ((this.angle - 90) * Math.PI) / 180
-       this.velocity.x += Math.cos(angle) * 0.2
-       this.velocity.y += Math.sin(angle) * 0.2
+       this.velocity.x += Math.cos(angle) * 0.2;
+       this.velocity.y += Math.sin(angle) * 0.2;
      }
 
-     this.center.x += this.velocity.x
-     this.center.y += this.velocity.y
+     this.center.x += this.velocity.x;
+     this.center.y += this.velocity.y;
 
     },
+
     draw: function(screen) {
       screen.save()
       screen.fillStyle = 'white';
@@ -77,11 +78,64 @@
       screen.restore()
 
     },
-    setupRotation: function() {
-
-    }
 
   };
+
+  var Asteroid = function(gameSize) {
+    this.size = { x: 50, y: 50};
+    // this.proximityGeneratorX = new proximityGeneratorX(gameSize);
+    this.spawnX = randomRangeNotIncluding(0, gameSize.x, ((gameSize.x / 2) - 100), ((gameSize.x / 2) + 100));
+    this.spawnY = randomRangeNotIncluding(0, gameSize.y, ((gameSize.y / 2) - 100), ((gameSize.y / 2) + 100));
+    this.center = { x: this.spawnX, y: this.spawnY};
+    this.angle = 0;
+    this.velocity = { x: randomRange(), y: randomRange() };
+  };
+
+  Asteroid.prototype = {
+    update: function() {
+      this.center.x += this.velocity.x;
+      this.center.y += this.velocity.y;
+      this.angle += 1;
+    },
+
+
+    draw: function(screen) {
+      screen.save()
+      screen.fillStyle = 'white';
+      screen.translate(this.center.x, this.center.y);
+      screen.rotate(this.angle * Math.PI / 180);
+      screen.translate(-this.center.x, -this.center.y);
+      screen.fillRect(this.center.x - this.size.x / 2,
+                      this.center.y - this.size.y / 2,
+                      this.size.x,
+                      this.size.y
+                    );
+      screen.restore()
+
+    },
+  };
+
+
+  var randomRangeNotIncluding = function(min, max, minEx, maxEx) {
+
+  	var diff = maxEx - minEx
+
+  	var num = Math.floor(Math.random() *  (max - diff));
+  	if (num >= minEx) {
+  		num += diff;
+  	} else if ( num < min) {
+  		num += min
+  	}
+
+  	return num
+  }
+
+  var randomRange = function() {
+    var num = Math.random();
+    num *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+    return num;
+  }
+
 
   var Keyboarder = function () {
   var keyState = {}
@@ -104,4 +158,6 @@
   window.onload = function() {
     new Game("gameCanvas");
   };
+
+
 })();
