@@ -1,6 +1,5 @@
 function Game(gameSize) {
   this.gameSize = gameSize;
-  console.log(gameSize);
   this.bodies = [new Player(this, gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize),new Asteroid(gameSize)];
 }
 
