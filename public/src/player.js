@@ -9,6 +9,12 @@ function Player(game, gameSize) {
     this.gameSize = gameSize;
     this.overHeated = 0;
     this.lifeSpan = 1;
+    this.verticies = [
+          { x: this.center.x + this.size.x / 2, y: this.center.y - this.size.y / 2},
+          { x: this.center.x - this.size.x / 2, y: this.center.y - this.size.y / 2},
+          { x: this.center.x + this.size.x / 2, y: this.center.y + this.size.y / 2},
+          { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
+    ]
   }
 
   Player.prototype = {
@@ -39,6 +45,7 @@ function Player(game, gameSize) {
 
      this.center.x += this.velocity.x;
      this.center.y += this.velocity.y;
+
 
      if (this.center.x - (this.size.x / 2) > this.gameSize.x) {
        this.center.x = 0;
