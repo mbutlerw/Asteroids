@@ -1,14 +1,14 @@
 function Asteroid(gameSize) {
-  var size = randomNumberFromRange(40, 80)
-  this.type = 'asteroid'
+  var size = randomNumberFromRange(40, 80);
+  this.type = 'asteroid';
   this.size = { x: size, y: size };
-  this.gameSize = gameSize
+  this.gameSize = gameSize;
   this.spawnX = randomRangeNotIncluding(0, gameSize.x, ((gameSize.x / 2) - 100), ((gameSize.x / 2) + 100));
   this.spawnY = randomRangeNotIncluding(0, gameSize.y, ((gameSize.y / 2) - 100), ((gameSize.y / 2) + 100));
   this.center = { x: this.spawnX, y: this.spawnY};
   this.angle = 0;
   this.velocity = { x: randomRange(), y: randomRange() };
-  this.lifeSpan = 1
+  this.lifeSpan = 1;
 }
 
 Asteroid.prototype = {
@@ -32,7 +32,7 @@ Asteroid.prototype = {
 
 
   draw: function(screen) {
-    screen.save()
+    screen.save();
     screen.strokeStyle = 'white';
     screen.translate(this.center.x, this.center.y);
     screen.rotate(this.angle * Math.PI / 180);
@@ -42,7 +42,18 @@ Asteroid.prototype = {
                     this.size.x,
                     this.size.y
                   );
-    screen.restore()
+    screen.restore();
 
   },
+};
+
+Asteroid.createAll = function(gameSize) {
+  var ASTEROID_COUNT = 10;
+
+  var asteroids = [];
+  for (var i = 0; i < ASTEROID_COUNT; i++) {
+    asteroids.push(new Asteroid(gameSize));
+  }
+
+  return asteroids;
 };

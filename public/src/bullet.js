@@ -9,9 +9,9 @@ function Bullet(center, velocity, gameSize) {
 
 Bullet.prototype = {
   update: function () {
-    this.lifeSpan -= 1
-    this.center.x += this.velocity.x
-    this.center.y += this.velocity.y
+    this.lifeSpan -= 1;
+    this.center.x += this.velocity.x;
+    this.center.y += this.velocity.y;
 
     if (this.center.x - (this.size.x / 2) > this.gameSize.x) {
       this.center.x = 0;
@@ -29,10 +29,10 @@ Bullet.prototype = {
   },
 
   draw: function(screen) {
-    screen.fillStyle = 'white'
+    screen.fillStyle = 'white';
     screen.fillRect(this.center.x - this.size.x / 2,
                     this.center.y - this.size.y / 2,
                     this.size.x,
-                    this.size.y)
+                    this.size.y);
   }
 };
