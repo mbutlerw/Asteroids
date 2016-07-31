@@ -29,8 +29,6 @@ Asteroid.prototype = {
       this.center.y = this.gameSize.y;
     }
   },
-
-
   draw: function(screen) {
     screen.save();
     screen.strokeStyle = 'white';
@@ -43,7 +41,6 @@ Asteroid.prototype = {
                     this.size.y
                   );
     screen.restore();
-
   },
 };
 
@@ -54,6 +51,5 @@ Asteroid.createAll = function(gameSize) {
   for (var i = 0; i < ASTEROID_COUNT; i++) {
     asteroids.push(new Asteroid(gameSize));
   }
-
   return asteroids;
 };

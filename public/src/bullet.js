@@ -25,7 +25,6 @@ Bullet.prototype = {
     if (this.center.y < 0) {
       this.center.y = this.gameSize.y;
     }
-
   },
 
   draw: function(screen) {
