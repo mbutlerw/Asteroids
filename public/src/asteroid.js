@@ -35,12 +35,7 @@ Asteroid.prototype = {
           { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
     ]
 
-    var self = this
-    for (let i = 0; i < this.vertices.length; i++) {
-      this.vertices[i] = calcNextVertexCoord(this.vertices[i], self.center, self.angle)
-    }
 
-    this.angle += 1;
     if (this.center.x - (this.size.x / 2) > this.gameSize.x) {
       this.center.x = 0;
       this.vertices = [
@@ -77,6 +72,12 @@ Asteroid.prototype = {
             { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
       ]
     }
+    var self = this
+    for (let i = 0; i < this.vertices.length; i++) {
+      this.vertices[i] = calcNextVertexCoord(this.vertices[i], self.center, self.angle)
+    }
+
+    this.angle += 1;
   },
 
 
