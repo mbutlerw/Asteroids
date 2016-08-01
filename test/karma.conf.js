@@ -4,7 +4,12 @@ module.exports = function(config){
     basePath: '../',
 
     files: [
-      'public/src/**/*.js',
+      'public/src/asteroid.js',
+      'public/src/bullet.js',
+      'public/src/game.js',
+      'public/src/keyboard.js',
+      'public/src/numberGenerator.js',
+      'public/src/player.js',
       'test/**/*.js'
     ],
 
