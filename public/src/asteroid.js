@@ -95,3 +95,13 @@ Asteroid.prototype = {
 
   },
 };
+
+Asteroid.createAll = function(gameSize) {
+  var ASTEROID_COUNT = 10;
+
+  var asteroids = [];
+  for (var i = 0; i < ASTEROID_COUNT; i++) {
+    asteroids.push(new Asteroid(gameSize));
+  }
+  return asteroids;
+};
