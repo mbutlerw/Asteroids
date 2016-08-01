@@ -1,6 +1,10 @@
 function Game(gameSize) {
   this.gameSize = gameSize;
   this.bodies = [];
+  this.sndLarge = new Audio('audio/bangLarge.wav');
+  this.sndSmall = new Audio('audio/bangSmall.wav');
+  this.sndMedium = new Audio('audio/bangMedium.wav');
+  this.sndThruster = new Audio('audio/thrust.wav');
 }
 
 Game.prototype = {
@@ -25,11 +29,17 @@ Game.prototype = {
   },
   collisionDetection: function() {
     var bodies = this.bodies;
+    var explosion = this.sndLarge;
 
     var notCollidingWithAnything = function(b1) {
-      return bodies.filter(function (b2) { return colliding(b1, b2); }).length === 0;
-    };
+        if (bodies.filter (function (b2) { return colliding(b1, b2); }).length === 0) 
 
+        {return true }
+
+        else { explosion.play() }
+      };
+
+    
     this.bodies = this.bodies.filter(notCollidingWithAnything);
 
     this.bodies = this.bodies.filter(function(body) {

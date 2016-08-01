@@ -14,6 +14,7 @@ function Player(game, gameSize) {
           { x: this.center.x + this.size.x / 2, y: this.center.y + this.size.y / 2},
           { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
     ]
+    this.sndThruster = new Audio('audio/thrust.wav');
   }
 
   Player.prototype = {
@@ -29,6 +30,7 @@ function Player(game, gameSize) {
       }
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
+        this.sndThruster.play();
        this.velocity.x += Math.cos(angle) * 0.1;
        this.velocity.y += Math.sin(angle) * 0.1;
       }

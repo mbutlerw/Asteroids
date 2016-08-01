@@ -18,6 +18,10 @@ function Asteroid(gameSize) {
 
 }
 
+  var sndLarge = new Audio('audio/bangLarge.wav');
+  var sndMedium = new Audio('audio/bangMedium.wav');
+  var sndSmall = new Audio('audio/bangSmall.wav');
+
 Asteroid.prototype = {
   update: function() {
 
