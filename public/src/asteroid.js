@@ -2,6 +2,7 @@ function Asteroid(gameSize) {
   var size = randomNumberFromRange(40, 80);
   this.type = 'asteroid';
   this.size = { x: size, y: size };
+  this.shape = this.randomShape();
   this.gameSize = gameSize;
   this.spawnX = randomRangeNotIncluding(0, gameSize.x, ((gameSize.x / 2) - 100), ((gameSize.x / 2) + 100));
   this.spawnY = randomRangeNotIncluding(0, gameSize.y, ((gameSize.y / 2) - 100), ((gameSize.y / 2) + 100));
@@ -10,6 +11,15 @@ function Asteroid(gameSize) {
   this.velocity = { x: randomRange(), y: randomRange() };
   this.lifeSpan = 1;
 }
+
+  var sndLarge = new Audio('audio/bangLarge.wav');
+  var sndMedium = new Audio('audio/bangMedium.wav');
+  var sndSmall = new Audio('audio/bangSmall.wav');
+
+Asteroid.prototype.randomShape = function() {
+    var charCode = Math.floor(Math.random() * (70 - 65 + 1)) + 65;
+    return String.fromCharCode('0xC' + String.fromCharCode(charCode));
+  };
 
 Asteroid.prototype = {
   update: function() {
@@ -37,11 +47,10 @@ Asteroid.prototype = {
     screen.translate(this.center.x, this.center.y);
     screen.rotate(this.angle * Math.PI / 180);
     screen.translate(-this.center.x, -this.center.y);
-    screen.strokeRect(this.center.x - this.size.x / 2,
-                    this.center.y - this.size.y / 2,
-                    this.size.x,
-                    this.size.y
-                  );
+    screen.strokeRect(this.shape, (this.center.x - this.size.x / 2), 
+      (this.center.y - this.size.y / 2), this.size.x, this.size.y);
+    
+    
     screen.restore();
 
   },

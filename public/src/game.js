@@ -1,6 +1,9 @@
 function Game(gameSize) {
   this.gameSize = gameSize;
   this.bodies = [];
+  this.sndLarge = new Audio('audio/bangLarge.wav');
+  this.sndSmall = new Audio('audio/bangSmall.wav');
+  this.sndMedium = new Audio('audio/bangMedium.wav');
 }
 
   Game.prototype = {
@@ -25,10 +28,17 @@ function Game(gameSize) {
     },
     collisionDetection: function() {
       var bodies = this.bodies;
+      var explosion = this.sndLarge;
 
       var notCollidingWithAnything = function(b1) {
-        return bodies.filter(function (b2) { return Game.colliding(b1, b2); }).length === 0;
+        if (bodies.filter (function (b2) { return Game.colliding(b1, b2); }).length === 0) 
+
+        {return true }
+
+        else { explosion.play() }
       };
+
+        // 
 
       this.bodies = this.bodies.filter(notCollidingWithAnything);
 
@@ -66,7 +76,8 @@ function Game(gameSize) {
 
 Game.colliding = function(b1, b2) {
   // console.log(b1);
-    return !(b1 === b2 ||
+
+  return !(b1 === b2 ||
              (b1 instanceof Asteroid  && b2 instanceof Asteroid) ||
              (b1 instanceof Player && b2 instanceof Bullet) ||
              (b1 instanceof Bullet && b2 instanceof Player) ||
@@ -74,4 +85,9 @@ Game.colliding = function(b1, b2) {
              b1.center.y + b1.size.y / 2 < b2.center.y - b2.size.y / 2 ||
              b1.center.x - b1.size.x / 2 > b2.center.x + b2.size.x / 2 ||
              b1.center.y - b1.size.y / 2 > b2.center.y + b2.size.y / 2);
-  };
+
+  // if (!miss) { 
+  //   this.sndLarge.play();
+  // }
+  
+};
