@@ -1,7 +1,6 @@
 function Game(gameSize) {
   this.gameSize = gameSize;
-  console.log(gameSize);
-  this.bodies = [new Asteroid(gameSize)];
+  this.bodies = [new Player(this, gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize), new Asteroid(gameSize)];
 }
 
   Game.prototype = {
@@ -10,12 +9,12 @@ function Game(gameSize) {
       var pnum = 0
       var anum = 0
 
-      // this.bodies.forEach(function (body) {
-      //   if (body.type == 'player') { pnum += 1}
-      //   if (body.type == 'asteroid') {anum += 1}
-      // })
-      //
-      // if (pnum === 0|| anum === 0) {  this.bodies = [new Player(this, this.gameSize), new Asteroid(this.gameSize), new Asteroid(this.gameSize), new Asteroid(this.gameSize), new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize)]}
+      this.bodies.forEach(function (body) {
+        if (body.type == 'player') { pnum += 1}
+        if (body.type == 'asteroid') {anum += 1}
+      })
+
+      if (pnum === 0|| anum === 0) {  this.bodies = [new Player(this, this.gameSize), new Asteroid(this.gameSize), new Asteroid(this.gameSize), new Asteroid(this.gameSize), new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize),new Asteroid(this.gameSize)]}
 
       var bodies = this.bodies
       var notCollidingWithAnything = function(b1) {

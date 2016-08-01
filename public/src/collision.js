@@ -1,12 +1,86 @@
 var colliding = function(b1, b2) {
-return !(b1 === b2 ||
-         (b1 instanceof Asteroid  && b2 instanceof Asteroid) ||
+
+
+
+    var initcheck = (b1 === b2 ||
+         (b1 instanceof Asteroid && b2 instanceof Asteroid) ||
          (b1 instanceof Player && b2 instanceof Bullet) ||
          (b1 instanceof Bullet && b2 instanceof Player) ||
-         b1.center.x + b1.size.x / 2 < b2.center.x - b2.size.x / 2 ||
-         b1.center.y + b1.size.y / 2 < b2.center.y - b2.size.y / 2 ||
-         b1.center.x - b1.size.x / 2 > b2.center.x + b2.size.x / 2 ||
-         b1.center.y - b1.size.y / 2 > b2.center.y + b2.size.y / 2)
+         b1.center.x + b1.size.x < b2.center.x - b2.size.x ||
+         b1.center.y + b1.size.y < b2.center.y - b2.size.y  ||
+         b1.center.x - b1.size.x > b2.center.x + b2.size.x  ||
+         b1.center.y - b1.size.y > b2.center.y + b2.size.y
+        )
+
+
+
+    if (!initcheck) {
+
+
+      if (b1 instanceof Bullet) {
+        console.log("bullet1")
+        var p1 = b1.center.x + b1.velocity.x
+        var p2 = b1.center.y + b1.velocity.y
+
+        for(let j = 0; j < b2.vertices.length; j++) {
+          var q1 = b2.vertices[j]
+          if (j === b2.vertices.length - 1) {
+            var q2 = b2.vertices[0]
+          } else {
+            var q2 = b2.vertices[j+1]
+          }
+
+          if (doLineSegmentsIntersect(p1, p2, q1, q2)) {return true}
+
+        }
+
+       }
+
+       if (b2 instanceof Bullet) {
+         console.log("bullet2")
+
+         var p1 = b2.center.x + b2.velocity.x
+         var p2 = b2.center.y + b2.velocity.y
+
+         for(let j = 0; j < b1.vertices.length; j++) {
+           var q1 = b1.vertices[j]
+           if (j === b1.vertices.length - 1) {
+             var q2 = b1.vertices[0]
+           } else {
+             var q2 = b1.vertices[j+1]
+           }
+
+           if (doLineSegmentsIntersect(p1, p2, q1, q2)) {return true}
+
+         }
+
+        }
+
+
+      if (b1 != b2) {
+        for(let i = 0; i < b1.vertices.length; i++) {
+          var p1 = b1.vertices[i]
+          if (i === b1.vertices.length - 1) {
+            var p2 = b1.vertices[0]
+          } else {
+          var p2 = b1.vertices[i+1]
+          }
+          for(let j = 0; j < b2.vertices.length; j++) {
+            var q1 = b2.vertices[j]
+            if (j === b2.vertices.length - 1) {
+              var q2 = b2.vertices[0]
+            } else {
+              var q2 = b2.vertices[j+1]
+            }
+
+            if (doLineSegmentsIntersect(p1, p2, q1, q2)) {return true}
+
+          }
+        }
+      }
+    } else {
+      return false
+    }
 }
 
 /**

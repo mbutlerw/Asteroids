@@ -9,9 +9,8 @@ function Player(game, gameSize) {
     this.gameSize = gameSize;
     this.overHeated = 0;
     this.lifeSpan = 1;
-    this.verticies = [
-          { x: this.center.x + this.size.x / 2, y: this.center.y - this.size.y / 2},
-          { x: this.center.x - this.size.x / 2, y: this.center.y - this.size.y / 2},
+    this.vertices = [
+          { x: this.center.x, y: this.center.y - this.size.y / 2},
           { x: this.center.x + this.size.x / 2, y: this.center.y + this.size.y / 2},
           { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
     ]
@@ -46,6 +45,16 @@ function Player(game, gameSize) {
      this.center.x += this.velocity.x;
      this.center.y += this.velocity.y;
 
+     this.vertices = [
+           { x: this.center.x, y: this.center.y - this.size.y / 2},
+           { x: this.center.x + this.size.x / 2, y: this.center.y + this.size.y / 2},
+           { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
+     ]
+
+     var self = this
+     for (let i = 0; i < this.vertices.length; i++) {
+       this.vertices[i] = calcNextVertexCoord(this.vertices[i], self.center, -self.angle)
+     }
 
      if (this.center.x - (this.size.x / 2) > this.gameSize.x) {
        this.center.x = 0;
@@ -64,23 +73,23 @@ function Player(game, gameSize) {
 
     draw: function(screen) {
       screen.save()
-      screen.translate(this.center.x, this.center.y);
-      screen.rotate(this.angle * Math.PI / 180);
-      screen.translate(-this.center.x, -this.center.y);
       screen.beginPath();
-      screen.moveTo(this.center.x, this.center.y - 10);
-      screen.lineTo(this.center.x + 5, this.center.y + 10);
-      screen.lineTo(this.center.x - 5, this.center.y + 10);
-      screen.lineTo(this.center.x, this.center.y - 10);
+      screen.moveTo(this.vertices[0].x, this.vertices[0].y);
+      screen.lineTo(this.vertices[1].x, this.vertices[1].y);
+      screen.lineTo(this.vertices[2].x, this.vertices[2].y);
+      screen.lineTo(this.vertices[0].x, this.vertices[0].y)
       screen.strokeStyle = 'white'
       screen.stroke()
       if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
-       screen.moveTo(this.center.x + 3, this.center.y + 12)
-       screen.lineTo(this.center.x, this.center.y + 15);
-       screen.lineTo(this.center.x - 3, this.center.y + 12);
-       screen.lineTo(this.center.x + 3, this.center.y + 12);
-       screen.strokeStyle = 'white'
-       screen.stroke()
+        screen.translate(this.center.x, this.center.y);
+        screen.rotate(this.angle * Math.PI / 180);
+        screen.translate(-this.center.x, -this.center.y);
+        screen.moveTo(this.center.x + 3, this.center.y + 12)
+        screen.lineTo(this.center.x, this.center.y + 15);
+        screen.lineTo(this.center.x - 3, this.center.y + 12);
+        screen.lineTo(this.center.x + 3, this.center.y + 12);
+        screen.strokeStyle = 'white'
+        screen.stroke()
       }
       screen.restore()
 

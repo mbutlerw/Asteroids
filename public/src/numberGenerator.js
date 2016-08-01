@@ -26,11 +26,11 @@ var calcNextVertexCoord = function (vertex, center, rotation) {
   var x = vertex.x
 	var y = vertex.y
 	var p = center.x
-	var q = center.x
+	var q = center.y
 	var angle = -degToRad(rotation)
 	var nextvert = { x: 0,y: 0}
-	nextvert.x = (x - p) * Math.cos(angle) - (y + q) * Math.sin(angle) + p
-	nextvert.y = (x - p) * Math.sin(angle) + (y + q) * Math.cos(angle) + q
+	nextvert.x = (x - p) * Math.cos(angle) - (y - q) * Math.sin(angle) + p
+	nextvert.y = (x - p) * Math.sin(angle) + (y - q) * Math.cos(angle) + q
 	return nextvert
 }
 

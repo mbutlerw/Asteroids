@@ -5,9 +5,9 @@ function Asteroid(gameSize) {
   this.gameSize = gameSize
   this.spawnX = randomRangeNotIncluding(0, gameSize.x, ((gameSize.x / 2) - 100), ((gameSize.x / 2) + 100));
   this.spawnY = randomRangeNotIncluding(0, gameSize.y, ((gameSize.y / 2) - 100), ((gameSize.y / 2) + 100));
-  this.center = { x: 100, y: 300 }
+  this.center = { x: this.spawnX, y: this.spawnY }
   this.angle = 0;
-  this.velocity = { x: 1, y: 0 };
+  this.velocity = { x: 0, y: 0 };
   this.lifeSpan = 1
   this.vertices = [
         { x: this.center.x - this.size.x / 2, y: this.center.y - this.size.y / 2},

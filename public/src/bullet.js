@@ -5,6 +5,12 @@ function Bullet(center, velocity, gameSize) {
   this.velocity = velocity;
   this.lifeSpan = 40;
   this.gameSize = gameSize;
+  this.vertices = [
+        { x: this.center.x - this.size.x / 2, y: this.center.y - this.size.y / 2},
+        { x: this.center.x + this.size.x / 2, y: this.center.y - this.size.y / 2},
+        { x: this.center.x + this.size.x / 2, y: this.center.y + this.size.y / 2},
+        { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
+  ]
 }
 
 Bullet.prototype = {
@@ -12,6 +18,12 @@ Bullet.prototype = {
     this.lifeSpan -= 1
     this.center.x += this.velocity.x
     this.center.y += this.velocity.y
+    this.vertices = [
+          { x: this.center.x - this.size.x / 2, y: this.center.y - this.size.y / 2},
+          { x: this.center.x + this.size.x / 2, y: this.center.y - this.size.y / 2},
+          { x: this.center.x + this.size.x / 2, y: this.center.y + this.size.y / 2},
+          { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
+    ]
 
     if (this.center.x - (this.size.x / 2) > this.gameSize.x) {
       this.center.x = 0;
