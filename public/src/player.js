@@ -18,7 +18,9 @@ function Player(game, gameSize) {
 
   Player.prototype = {
     update: function() {
-      if (this.overHeated > 0) {this.overHeated -= 1}
+      var angle = ((this.angle - 90) * Math.PI) / 180;
+
+      if (this.overHeated > 0) {this.overHeated -= 1;}
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.LEFT)) {
         this.angle -= 4;
@@ -27,23 +29,21 @@ function Player(game, gameSize) {
       }
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
-       var angle = ((this.angle - 90) * Math.PI) / 180
        this.velocity.x += Math.cos(angle) * 0.1;
        this.velocity.y += Math.sin(angle) * 0.1;
-     }
-
-     if (this.keyboarder.isDown(this.keyboarder.KEYS.SPACE) && this.overHeated === 0) {
-        var angle = ((this.angle - 90) * Math.PI) / 180
-        var bullet = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle) * 10, y: Math.sin(angle) * 10}, this.gameSize)
-        this.game.addBody(bullet)
-        this.overHeated = 20
       }
 
-      this.velocity.x = this.velocity.x * 0.99
-      this.velocity.y = this.velocity.y * 0.99
+      if (this.keyboarder.isDown(this.keyboarder.KEYS.SPACE) && this.overHeated === 0) {
+        var bullet = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle) * 10, y: Math.sin(angle) * 10}, this.gameSize);
+        this.game.addBody(bullet);
+        this.overHeated = 20;
+      }
 
-     this.center.x += this.velocity.x;
-     this.center.y += this.velocity.y;
+      this.center.x += this.velocity.x
+      this.center.y += this.velocity.y
+
+      this.velocity.x = this.velocity.x * 0.99;
+      this.velocity.y = this.velocity.y * 0.99;
 
      this.vertices = [
            { x: this.center.x, y: this.center.y - this.size.y / 2},
@@ -70,7 +70,7 @@ function Player(game, gameSize) {
      for (let i = 0; i < this.vertices.length; i++) {
        this.vertices[i] = calcNextVertexCoord(this.vertices[i], self.center, -self.angle)
      }
-     
+
     },
 
     draw: function(screen) {
@@ -93,8 +93,6 @@ function Player(game, gameSize) {
         screen.strokeStyle = 'white'
         screen.stroke()
       }
-      screen.restore()
-
+      screen.restore();
     },
-
   };

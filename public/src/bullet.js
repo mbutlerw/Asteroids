@@ -37,14 +37,13 @@ Bullet.prototype = {
     if (this.center.y < 0) {
       this.center.y = this.gameSize.y;
     }
-
   },
 
   draw: function(screen) {
-    screen.fillStyle = 'white'
+    screen.fillStyle = 'white';
     screen.fillRect(this.center.x - this.size.x / 2,
                     this.center.y - this.size.y / 2,
                     this.size.x,
-                    this.size.y)
+                    this.size.y);
   }
 };
