@@ -18,9 +18,8 @@ var colliding = function(b1, b2) {
 
 
       if (b1 instanceof Bullet) {
-        console.log("bullet1")
-        var p1 = b1.center.x + b1.velocity.x
-        var p2 = b1.center.y + b1.velocity.y
+        var p1 = b1.center
+        var p2 = { x: b1.center.x + b1.velocity.x, y: b1.center.y + b1.velocity.y}
 
         for(let j = 0; j < b2.vertices.length; j++) {
           var q1 = b2.vertices[j]
@@ -37,10 +36,9 @@ var colliding = function(b1, b2) {
        }
 
        if (b2 instanceof Bullet) {
-         console.log("bullet2")
 
-         var p1 = b2.center.x + b2.velocity.x
-         var p2 = b2.center.y + b2.velocity.y
+         var p1 = b2.center
+         var p2 = { x: b2.center.x + b2.velocity.x, y: b2.center.y + b2.velocity.y }
 
          for(let j = 0; j < b1.vertices.length; j++) {
            var q1 = b1.vertices[j]
