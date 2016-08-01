@@ -16,7 +16,6 @@ var colliding = function(b1, b2) {
 
     if (!initcheck) {
 
-      console.log("expensive")
       if (b1 instanceof Bullet) {
         var p1 = b1.center
         var p2 = { x: b1.center.x + b1.velocity.x, y: b1.center.y + b1.velocity.y}
