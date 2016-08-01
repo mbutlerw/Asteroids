@@ -11,7 +11,6 @@ Game.prototype = {
     }
 
     this.collisionDetection();
-    this.gameOver();
   },
   draw: function(screen, gameSize) {
     screen.clearRect(0, 0, gameSize.x, gameSize.y);
@@ -36,25 +35,6 @@ Game.prototype = {
       return body.lifeSpan > 0;
     });
   },
-  gameOver: function() {
-    var pnum = 0;
-    var anum = 0;
-
-    self = this;
-
-    this.bodies.forEach(function (body) {
-      if (body.type == 'player') { pnum += 1;}
-      if (body.type == 'asteroid') {anum += 1;}
-    });
-
-    if (pnum === 0|| anum === 0) {
-      this.bodies = [];
-      this.addBody(new Player(this, this.gameSize));
-      Asteroid.createAll(this.gameSize).forEach(function(asteroid) {
-        self.addBody(asteroid);
-      });
-    }
-  }
 };
 
 // Game.drawBody = function(screen, body) {
@@ -70,6 +50,8 @@ Game.colliding = function(b1, b2) {
              (b1 instanceof Asteroid  && b2 instanceof Asteroid) ||
              (b1 instanceof Player && b2 instanceof Bullet) ||
              (b1 instanceof Bullet && b2 instanceof Player) ||
+             (b1 instanceof Player2 && b2 instanceof Bullet) ||
+             (b1 instanceof Bullet && b2 instanceof Player2) ||
              b1.center.x + b1.size.x / 2 < b2.center.x - b2.size.x / 2 ||
              b1.center.y + b1.size.y / 2 < b2.center.y - b2.size.y / 2 ||
              b1.center.x - b1.size.x / 2 > b2.center.x + b2.size.x / 2 ||

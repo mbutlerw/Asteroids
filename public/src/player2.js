@@ -1,4 +1,4 @@
-function Player(game, gameSize, xPosition) {
+function Player2(game, gameSize, xPosition) {
     this.type = 'player';
     this.game = game;
     this.size = { x: 10, y: 20};
@@ -8,10 +8,9 @@ function Player(game, gameSize, xPosition) {
     this.gameSize = gameSize;
     this.overHeated = 0;
     this.lifeSpan = 1;
-    this.screen = screen;
   }
 
-  Player.prototype = {
+  Player2.prototype = {
     update: function() {
       if (this.overHeated > 0) {this.overHeated -= 1;}
 
@@ -80,5 +79,4 @@ function Player(game, gameSize, xPosition) {
       // }
       screen.restore();
     },
-
   };
