@@ -36,7 +36,6 @@ var colliding = function(b1, b2) {
        }
 
        if (b2 instanceof Bullet) {
-
          var p1 = b2.center
          var p2 = { x: b2.center.x + b2.velocity.x, y: b2.center.y + b2.velocity.y }
 
@@ -81,15 +80,12 @@ var colliding = function(b1, b2) {
     }
 }
 
-/**
- * @author Peter Kelley
- * @author pgkelley4@gmail.com
- */
+
 
 /**
- * See if two line segments intersect. This uses the
- * vector cross product approach described below:
- * http://stackoverflow.com/a/565282/786339
+  * See if two line segments intersect. This uses the
+  * vector cross product approach described below:
+  * http://stackoverflow.com/a/565282/786339
  *
  * @param {Object} p point object with x and y coordinates
  *  representing the start of the 1st line.
@@ -195,3 +191,8 @@ function allEqual(args) {
 	}
 	return true;
 }
+
+/**
+ * @author Peter Kelley
+ * @author pgkelley4@gmail.com
+ */
