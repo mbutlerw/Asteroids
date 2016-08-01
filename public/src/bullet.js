@@ -1,6 +1,6 @@
 function Bullet(center, velocity, gameSize) {
-  var snd = new Audio('audio/fire.wav');
-  snd.play();
+  
+  sounds.fire.play();
   this.type = 'bullet';
   this.size = { x: 3, y: 3};
   this.center = center;
