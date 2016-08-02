@@ -125,7 +125,6 @@ Game.prototype = {
       Asteroid.createAll(this.gameSize, this.level).forEach(function(asteroid) {
         self.addBody(asteroid);
       });
-      document.getElementById("level").innerHTML = this.level;
     }
     if (anum === 0 && pnum === 1) {
       this.level += 1;
@@ -133,7 +132,6 @@ Game.prototype = {
       Asteroid.createAll(this.gameSize, this.level).forEach(function(asteroid) {
         self.addBody(asteroid);
       });
-      document.getElementById("level").innerHTML = this.level;
     }
   }
 };
