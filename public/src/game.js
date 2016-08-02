@@ -1,6 +1,8 @@
 function Game(gameSize) {
   this.gameSize = gameSize;
   this.bodies = [];
+  this.level = 1;
+  this.respawnPlayer = false;
 
 }
 
@@ -12,7 +14,7 @@ Game.prototype = {
     }
 
     this.collisionDetection();
-    this.gameOver();
+    this.statusCheck();
   },
   draw: function(screen, gameSize) {
     screen.clearRect(0, 0, gameSize.x, gameSize.y);
@@ -20,6 +22,9 @@ Game.prototype = {
     for (var i = 0; i < this.bodies.length; i++) {
       this.bodies[i].draw(screen);
     }
+    screen.strokeStyle = 'white';
+    screen.font = "50px Helvetica";
+    screen.strokeText(this.level, 390, 50);
   },
   addBody: function(body) {
     this.bodies.push(body);
@@ -28,21 +33,21 @@ Game.prototype = {
     var bodies = this.bodies;
 
     var notCollidingWithAnything = function(b1) {
-        if (bodies.filter (function (b2) { return colliding(b1, b2); }).length === 0) 
+        if (bodies.filter (function (b2) { return colliding(b1, b2); }).length === 0)
 
         {return true }
 
         else { sounds.largeExplosion.play() }
       };
 
-    
+
     this.bodies = this.bodies.filter(notCollidingWithAnything);
 
     this.bodies = this.bodies.filter(function(body) {
       return body.lifeSpan > 0;
     });
   },
-  gameOver: function() {
+  statusCheck: function() {
     var pnum = 0;
     var anum = 0;
 
@@ -53,12 +58,24 @@ Game.prototype = {
       if (body.type == 'asteroid') {anum += 1;}
     });
 
-    if (pnum === 0|| anum === 0) {
+    if (pnum === 0) {
+      this.level = 1;
+      console.log(this.level);
       this.bodies = [];
       this.addBody(new Player(this, this.gameSize));
-      Asteroid.createAll(this.gameSize).forEach(function(asteroid) {
+      Asteroid.createAll(this.gameSize, this.level).forEach(function(asteroid) {
         self.addBody(asteroid);
       });
+      document.getElementById("level").innerHTML = this.level;
+    }
+    if (anum === 0 && pnum === 1) {
+      this.level += 1;
+      this.respawnPlayer = true;
+      console.log(this.level);
+      Asteroid.createAll(this.gameSize, this.level).forEach(function(asteroid) {
+        self.addBody(asteroid);
+      });
+      document.getElementById("level").innerHTML = this.level;
     }
   }
 };

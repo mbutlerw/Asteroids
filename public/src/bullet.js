@@ -1,5 +1,5 @@
 function Bullet(center, velocity, gameSize) {
-  
+
   sounds.fire.play();
   this.type = 'bullet';
   this.size = { x: 3, y: 3};

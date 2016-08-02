@@ -72,6 +72,11 @@ function Player(game, gameSize) {
        this.vertices[i] = calcNextVertexCoord(this.vertices[i], self.center, -self.angle)
      }
 
+     if (this.game.respawnPlayer === true) {
+       this.center = { x: gameSize.x / 2, y: gameSize.y / 2 };
+       this.velocity = { x: 0, y: 0};
+       this.game.respawnPlayer = false;
+     }
     },
 
     draw: function(screen) {

@@ -25,10 +25,6 @@ function Asteroid(gameSize) {
 Asteroid.prototype = {
   update: function() {
 
-
-
-
-
     this.center.x += this.velocity.x;
     this.center.y += this.velocity.y;
 
@@ -96,12 +92,11 @@ Asteroid.prototype = {
     screen.strokeStyle = 'white'
     screen.stroke()
     screen.restore()
-
   },
 };
 
-Asteroid.createAll = function(gameSize) {
-  var ASTEROID_COUNT = 10;
+Asteroid.createAll = function(gameSize, level) {
+  var ASTEROID_COUNT = level;
 
   var asteroids = [];
   for (var i = 0; i < ASTEROID_COUNT; i++) {
