@@ -6,7 +6,6 @@ function Game(gameSize) {
 
 Game.prototype = {
   update: function() {
-
     for (var i = 0; i < this.bodies.length; i++) {
       this.bodies[i].update();
     }
@@ -26,17 +25,34 @@ Game.prototype = {
   },
   collisionDetection: function() {
     var bodies = this.bodies;
+    var self = this
+    var newbodies = []
+    var NotcollidingWithAnything = function(b1) {
 
-    var notCollidingWithAnything = function(b1) {
-        if (bodies.filter (function (b2) { return colliding(b1, b2); }).length === 0) 
+        if (bodies.filter (function (b2) { return colliding(b1, b2); }).length === 0) {
+          return true
+        }
 
-        {return true }
+        else {
+            sounds.largeExplosion.play()
+            if (b1.type === "asteroid") {
+              if (b1.size.x >= 70) {
+                for(let i = 0; i < 3; i++) {
+                  var size = randomNumberFromRange(30, 40)
+                  newbodies.push(new Asteroid(self.gameSize, { x:b1.center.x + i, y: b1.center.y + i}, { x: size, y: size}))
+                }
+              } else if (b1.size.x >= 30) {
+                for(let i = 0; i < 3; i++) {
+                  var size = randomNumberFromRange(10, 15)
+                  newbodies.push(new Asteroid(self.gameSize, { x:b1.center.x + i, y: b1.center.y + i}, { x: size, y: size}))
+                }
+              }
 
-        else { sounds.largeExplosion.play() }
+            }
+          }
       };
 
-    
-    this.bodies = this.bodies.filter(notCollidingWithAnything);
+     this.bodies = (this.bodies.filter(NotcollidingWithAnything).concat(newbodies))
 
     this.bodies = this.bodies.filter(function(body) {
       return body.lifeSpan > 0;
@@ -56,7 +72,7 @@ Game.prototype = {
     if (pnum === 0|| anum === 0) {
       this.bodies = [];
       this.addBody(new Player(this, this.gameSize));
-      Asteroid.createAll(this.gameSize).forEach(function(asteroid) {
+      Asteroid.createAll(this.gameSize, 10).forEach(function(asteroid) {
         self.addBody(asteroid);
       });
     }

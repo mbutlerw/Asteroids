@@ -1,30 +1,23 @@
-function Asteroid(gameSize) {
-  var size = randomNumberFromRange(40, 80)
+function Asteroid(gameSize, center, size) {
   this.type = 'asteroid'
-  this.size = { x: size, y: size };
+  this.size = size;
   this.gameSize = gameSize
-  this.spawnX = randomRangeNotIncluding(0, gameSize.x, ((gameSize.x / 2) - 100), ((gameSize.x / 2) + 100));
-  this.spawnY = randomRangeNotIncluding(0, gameSize.y, ((gameSize.y / 2) - 100), ((gameSize.y / 2) + 100));
-  this.center = { x: this.spawnX, y: this.spawnY }
+  this.center = center
   this.angle = 0;
   this.velocity = { x: randomRange(), y: randomRange() };
   this.lifeSpan = 1
   this.vertices = [
-        { x: this.center.x - this.size.x / 2, y: this.center.y - this.size.y / 2},
-        { x: this.center.x + this.size.x / 2, y: this.center.y - this.size.y / 2},
-        { x: this.center.x + this.size.x / 2, y: this.center.y + this.size.y / 2},
-        { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
+        { x: center.x - size.x / 2, y: center.y - size.y / 2},
+        { x: center.x + size.x / 2, y: center.y - size.y / 2},
+        { x: center.x + size.x / 2, y: center.y + size.y / 2},
+        { x: center.x - size.x / 2, y: center.y + size.y / 2}
   ]
 
 }
 
-  var sndLarge = new Audio('audio/bangLarge.wav');
-  var sndMedium = new Audio('audio/bangMedium.wav');
-  var sndSmall = new Audio('audio/bangSmall.wav');
 
 Asteroid.prototype = {
   update: function() {
-
 
 
 
@@ -100,12 +93,15 @@ Asteroid.prototype = {
   },
 };
 
-Asteroid.createAll = function(gameSize) {
-  var ASTEROID_COUNT = 10;
+Asteroid.createAll = function(gameSize, number) {
 
   var asteroids = [];
-  for (var i = 0; i < ASTEROID_COUNT; i++) {
-    asteroids.push(new Asteroid(gameSize));
+  for (var i = 0; i < number; i++) {
+    var size = randomNumberFromRange(70, 80)
+    var spawnX = randomRangeNotIncluding(0, gameSize.x, ((gameSize.x / 2) - 100), ((gameSize.x / 2) + 100));
+    var spawnY = randomRangeNotIncluding(0, gameSize.y, ((gameSize.y / 2) - 100), ((gameSize.y / 2) + 100));
+
+    asteroids.push(new Asteroid(gameSize, { x: spawnX, y: spawnY }, { x: size, y: size }));
   }
   return asteroids;
 };
