@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <script src="https://aframe.io/releases/0.2.0/aframe.js"></script>
-  <script src="./src/main.js"></script>
-  <script src="./src/game.js"></script>
-  <script src="./src/player.js"></script>
-  <script src="./src/asteroid.js"></script>
-  <script src="./src/bullet.js"></script>
-  <script src="./src/keyboard.js"></script>
-  <script src="./src/numberGenerator.js"></script>
-</head>
+  <head>
+    <meta charset="utf-8"/>
+    <script src="https://aframe.io/releases/0.2.0/aframe.js"></script>
+    <script src="./src/main.js"></script>
+    <script src="./src/game.js"></script>
+    <script src="./src/player.js"></script>
+    <script src="./src/asteroid.js"></script>
+    <script src="./src/bullet.js"></script>
+    <script src="./src/keyboard.js"></script>
+    <script src="./src/numberGenerator.js"></script>
+  </head>
 
   <body>
     <a-scene>
       <a-sky color="black"></a-sky>
-      <a-plane id="screen" position="0 1.25 -1" color="black" scale=".01 .01 .01" canvas-material="width:1200;height:600" width="1200" height="600">
+      <a-plane id="screen" position="0 1.25 -1" color="black" scale=".01 .01 .01" canvas-material="width:1024;height:512" width="1024" height="512">
     </a-scene>
   </body>
+  <script>
+    window.onload = function() {
+      var canvas = document.querySelector("#screen").components["canvas-material"];
+      console.log(canvas);
+      var screen = canvas.getContext('2d');
 
-    <script>
-        var canvas = document.querySelector("#screen").components["canvas-material"];
-        var screen = canvas.getContext('2d');
+      var gameSize = {x: canvas.data.width, y: canvas.data.height } ;
+      this.gameSize = {x: canvas.data.width, y: canvas.data.height } ;
+      var game = new Game(gameSize);
 
-        var gameSize = {x: canvas.data.width, y: canvas.data.height } ;
-        this.gameSize = {x: canvas.data.width, y: canvas.data.height } ;
-        var game = new Game(gameSize);
+      game.addBody(new Player(game, this.gameSize));
+      Asteroid.createAll(gameSize).forEach(function(asteroid) {
+        game.addBody(asteroid);
+      });
 
-        game.addBody(new Player(game, this.gameSize));
-        Asteroid.createAll(gameSize).forEach(function(asteroid) {
-          game.addBody(asteroid);
-        });
-
-        window.setInterval(function(){
-          game.update();
-          game.draw(screen, gameSize);
-          canvas.updateTexture();
-        },15)
-
-    </script>
-    </html>
+      window.setInterval(function(){
+        game.update();
+        game.draw(screen, gameSize);
+        canvas.updateTexture();
+      },10)
+    };
+  </script>
+</html>
