@@ -3,13 +3,23 @@ function Game(gameSize) {
   this.bodies = [];
   this.level = 1;
   this.respawnPlayer = false;
+  this.deadBodies = []
+  this.respawnTime = 0
 
 }
 
 Game.prototype = {
   update: function() {
+
+    this.respawnTime -= 1
+    if (this.respawnTime === 0) { this.bodies.push(this.deadBodies.pop()) }
+
     for (var i = 0; i < this.bodies.length; i++) {
       this.bodies[i].update();
+    }
+
+    for (var i = 0; i < this.deadBodies.length; i++) {
+      this.deadBodies[i].update();
     }
 
     this.collisionDetection();
@@ -21,6 +31,11 @@ Game.prototype = {
     for (var i = 0; i < this.bodies.length; i++) {
       this.bodies[i].draw(screen);
     }
+
+    for (var i = 0; i < this.deadBodies.length; i++) {
+      this.deadBodies[i].draw(screen);
+    }
+
     screen.strokeStyle = 'white';
     screen.font = "50px Helvetica";
     screen.strokeText(this.level, 390, 50);
@@ -31,7 +46,7 @@ Game.prototype = {
   collisionDetection: function() {
     var bodies = this.bodies;
     var self = this
-    var newbodies = []
+    var newBodies = []
     var NotcollidingWithAnything = function(b1) {
 
 
@@ -43,16 +58,27 @@ Game.prototype = {
               sounds.largeExplosion.play()
               for(let i = 0; i < 3; i++) {
                 var size = randomNumberFromRange(30, 40)
-                newbodies.push(new Asteroid(self.gameSize, { x:b1.center.x + i, y: b1.center.y + i}, { x: size, y: size}))
+                newBodies.push(new Asteroid(self.gameSize, { x:b1.center.x + i, y: b1.center.y + i}, { x: size, y: size}))
               }
             } else if (b1.size.x >= 30) {
               sounds.mediumExplosion.play()
               for(let i = 0; i < 3; i++) {
                 var size = randomNumberFromRange(10, 15)
-                newbodies.push(new Asteroid(self.gameSize, { x:b1.center.x + i, y: b1.center.y + i}, { x: size, y: size}))
+                newBodies.push(new Asteroid(self.gameSize, { x:b1.center.x + i, y: b1.center.y + i}, { x: size, y: size}))
               }
             } else {
               sounds.smallExplosion.play()
+            }
+
+          } else if (b1.type === "player"){
+            b1.center = { x: 400, y: 300}
+            b1.velocity = {x: 0, y: 0}
+            b1.angle = 0
+            if (b1.lifeSpan != 1) {
+              b1.repairing = 120
+              b1.lifeSpan -= 1
+              self.respawnTime = 120
+              self.deadBodies.push(b1)
             }
 
           }
@@ -60,7 +86,7 @@ Game.prototype = {
       };
 
 
-    this.bodies = (this.bodies.filter(NotcollidingWithAnything).concat(newbodies))
+    this.bodies = (this.bodies.filter(NotcollidingWithAnything).concat(newBodies))
 
 
     this.bodies = this.bodies.filter(function(body) {
@@ -74,6 +100,11 @@ Game.prototype = {
     self = this;
 
     this.bodies.forEach(function (body) {
+      if (body.type == 'player') { pnum += 1;}
+      if (body.type == 'asteroid') {anum += 1;}
+    });
+
+    this.deadBodies.forEach(function (body) {
       if (body.type == 'player') { pnum += 1;}
       if (body.type == 'asteroid') {anum += 1;}
     });

@@ -8,7 +8,8 @@ function Player(game, gameSize) {
     this.velocity = { x: 0, y: 0};
     this.gameSize = gameSize;
     this.overHeated = 0;
-    this.lifeSpan = 1;
+    this.lifeSpan = 3;
+    this.repairing = 0
     this.vertices = [
           { x: this.center.x, y: this.center.y - this.size.y / 2},
           { x: this.center.x + this.size.x / 2, y: this.center.y + this.size.y / 2},
@@ -21,6 +22,7 @@ function Player(game, gameSize) {
       var angle = ((this.angle - 90) * Math.PI) / 180;
 
       if (this.overHeated > 0) {this.overHeated -= 1;}
+      if (this.repairing > 0) {this.repairing -= 1}
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.LEFT)) {
         this.angle -= 4;
@@ -82,23 +84,35 @@ function Player(game, gameSize) {
     draw: function(screen) {
       screen.save()
       screen.beginPath();
-      screen.moveTo(this.vertices[0].x, this.vertices[0].y);
-      screen.lineTo(this.vertices[1].x, this.vertices[1].y);
-      screen.lineTo(this.vertices[2].x, this.vertices[2].y);
-      screen.lineTo(this.vertices[0].x, this.vertices[0].y)
+
+      for(let i = 0; i < this.lifeSpan; i++ ) {
+      screen.moveTo(780 - i * 18, 25 - this.size.y / 2)
+      screen.lineTo(780 - i * 18 + this.size.x / 2, 25 + this.size.y / 2)
+      screen.lineTo(780 - i * 18 - this.size.x / 2, 25 + this.size.y / 2)
+      screen.lineTo(780 - i * 18, 25 - this.size.y / 2)
       screen.strokeStyle = 'white'
-      screen.stroke()
-      if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
-        screen.translate(this.center.x, this.center.y);
-        screen.rotate(this.angle * Math.PI / 180);
-        screen.translate(-this.center.x, -this.center.y);
-        screen.moveTo(this.center.x + 3, this.center.y + 12)
-        screen.lineTo(this.center.x, this.center.y + 15);
-        screen.lineTo(this.center.x - 3, this.center.y + 12);
-        screen.lineTo(this.center.x + 3, this.center.y + 12);
-        screen.strokeStyle = 'white'
-        screen.stroke()
       }
-      screen.restore();
+
+      if (this.repairing % 20 < 10) {
+        screen.moveTo(this.vertices[0].x, this.vertices[0].y);
+        screen.lineTo(this.vertices[1].x, this.vertices[1].y);
+        screen.lineTo(this.vertices[2].x, this.vertices[2].y);
+        screen.lineTo(this.vertices[0].x, this.vertices[0].y)
+
+
+
+        if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
+          screen.translate(this.center.x, this.center.y);
+          screen.rotate(this.angle * Math.PI / 180);
+          screen.translate(-this.center.x, -this.center.y);
+          screen.moveTo(this.center.x + 3, this.center.y + 12)
+          screen.lineTo(this.center.x, this.center.y + 15);
+          screen.lineTo(this.center.x - 3, this.center.y + 12);
+          screen.lineTo(this.center.x + 3, this.center.y + 12);
+          screen.strokeStyle = 'white'
+          screen.restore();
+        }
+      screen.stroke()
+      }
     },
   };
