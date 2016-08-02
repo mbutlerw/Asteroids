@@ -14,9 +14,10 @@ window.addEventListener('load', function(){
 
 
   var game = new Game(gameSize);
+  document.getElementById("level").innerHTML = game.level;
 
   game.addBody(new Player(game, this.gameSize));
-  Asteroid.createAll(gameSize, 10).forEach(function(asteroid) {
+  Asteroid.createAll(gameSize, game.level).forEach(function(asteroid) {
     game.addBody(asteroid);
   });
 

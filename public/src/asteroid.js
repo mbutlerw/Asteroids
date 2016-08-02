@@ -19,9 +19,6 @@ function Asteroid(gameSize, center, size) {
 Asteroid.prototype = {
   update: function() {
 
-
-
-
     this.center.x += this.velocity.x;
     this.center.y += this.velocity.y;
 
@@ -89,14 +86,13 @@ Asteroid.prototype = {
     screen.strokeStyle = 'white'
     screen.stroke()
     screen.restore()
-
   },
 };
 
-Asteroid.createAll = function(gameSize, number) {
 
+Asteroid.createAll = function(gameSize, level) {
   var asteroids = [];
-  for (var i = 0; i < number; i++) {
+  for (var i = 0; i < level; i++) {
     var size = randomNumberFromRange(70, 80)
     var spawnX = randomRangeNotIncluding(0, gameSize.x, ((gameSize.x / 2) - 100), ((gameSize.x / 2) + 100));
     var spawnY = randomRangeNotIncluding(0, gameSize.y, ((gameSize.y / 2) - 100), ((gameSize.y / 2) + 100));
