@@ -8,7 +8,6 @@ function Game(gameSize) {
 
 Game.prototype = {
   update: function() {
-
     for (var i = 0; i < this.bodies.length; i++) {
       this.bodies[i].update();
     }
@@ -31,17 +30,38 @@ Game.prototype = {
   },
   collisionDetection: function() {
     var bodies = this.bodies;
+    var self = this
+    var newbodies = []
+    var NotcollidingWithAnything = function(b1) {
 
-    var notCollidingWithAnything = function(b1) {
-        if (bodies.filter (function (b2) { return colliding(b1, b2); }).length === 0)
 
-        {return true }
+      if (bodies.filter (function (b2) { return colliding(b1, b2); }).length === 0) {
+        return true
+      } else {
+          if (b1.type === "asteroid") {
+            if (b1.size.x >= 70) {
+              sounds.largeExplosion.play()
+              for(let i = 0; i < 3; i++) {
+                var size = randomNumberFromRange(30, 40)
+                newbodies.push(new Asteroid(self.gameSize, { x:b1.center.x + i, y: b1.center.y + i}, { x: size, y: size}))
+              }
+            } else if (b1.size.x >= 30) {
+              sounds.mediumExplosion.play()
+              for(let i = 0; i < 3; i++) {
+                var size = randomNumberFromRange(10, 15)
+                newbodies.push(new Asteroid(self.gameSize, { x:b1.center.x + i, y: b1.center.y + i}, { x: size, y: size}))
+              }
+            } else {
+              sounds.smallExplosion.play()
+            }
 
-        else { sounds.largeExplosion.play() }
+          }
+        }
       };
 
 
-    this.bodies = this.bodies.filter(notCollidingWithAnything);
+    this.bodies = (this.bodies.filter(NotcollidingWithAnything).concat(newbodies))
+
 
     this.bodies = this.bodies.filter(function(body) {
       return body.lifeSpan > 0;
@@ -60,7 +80,6 @@ Game.prototype = {
 
     if (pnum === 0) {
       this.level = 1;
-      console.log(this.level);
       this.bodies = [];
       this.addBody(new Player(this, this.gameSize));
       Asteroid.createAll(this.gameSize, this.level).forEach(function(asteroid) {
@@ -71,7 +90,6 @@ Game.prototype = {
     if (anum === 0 && pnum === 1) {
       this.level += 1;
       this.respawnPlayer = true;
-      console.log(this.level);
       Asteroid.createAll(this.gameSize, this.level).forEach(function(asteroid) {
         self.addBody(asteroid);
       });
