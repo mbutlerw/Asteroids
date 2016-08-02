@@ -41,7 +41,6 @@ Game.prototype = {
           if (b1.type === "asteroid") {
             if (randomPowerUpChecker() === true) {
               newbodies.push(new Powerup(self.gameSize, { x:b1.center.x, y: b1.center.y }, 10))
-              console.log(bodies);
             }
             if (b1.size.x >= 70) {
               sounds.largeExplosion.play()
@@ -59,11 +58,15 @@ Game.prototype = {
               sounds.smallExplosion.play()
             }
 
+          } else if (b1.type === "powerup") {
+              var player = bodies.filter(function(body){
+                return body.type === 'player';
+              })[0]
+            player.poweredUp += 600;
           }
-        }
       };
 
-
+  }
     this.bodies = (this.bodies.filter(NotcollidingWithAnything).concat(newbodies))
 
 

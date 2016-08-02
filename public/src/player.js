@@ -38,7 +38,6 @@ function Player(game, gameSize) {
       }
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.SPACE) && this.overHeated === 0) {
-        console.log(this.poweredUp);
         if (this.poweredUp > 0) {
           var bullet1 = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle - 0.1) * 10 + this.velocity.x, y: Math.sin(angle - 0.1) * 10 + this.velocity.y}, this.gameSize);
           var bullet2 = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle) * 10 + this.velocity.x, y: Math.sin(angle) * 10 + this.velocity.y}, this.gameSize);
@@ -96,13 +95,14 @@ function Player(game, gameSize) {
 
     draw: function(screen) {
       screen.save()
+      screen.fillStyle = 'yellow'
+      screen.fillRect(20, 20, this.poweredUp/12, 5)
       screen.beginPath();
       screen.moveTo(this.vertices[0].x, this.vertices[0].y);
       screen.lineTo(this.vertices[1].x, this.vertices[1].y);
       screen.lineTo(this.vertices[2].x, this.vertices[2].y);
       screen.lineTo(this.vertices[0].x, this.vertices[0].y)
       screen.strokeStyle = 'white'
-      screen.stroke()
       if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
         screen.translate(this.center.x, this.center.y);
         screen.rotate(this.angle * Math.PI / 180);
@@ -111,9 +111,8 @@ function Player(game, gameSize) {
         screen.lineTo(this.center.x, this.center.y + 15);
         screen.lineTo(this.center.x - 3, this.center.y + 12);
         screen.lineTo(this.center.x + 3, this.center.y + 12);
-        screen.strokeStyle = 'white'
-        screen.stroke()
       }
+      screen.stroke()
       screen.restore();
     },
   };

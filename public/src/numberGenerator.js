@@ -39,7 +39,7 @@ var degToRad = function (degrees) {
 
 var randomPowerUpChecker = function() {
   var num = Math.random();
-  if (num <= 0.5) {
+  if (num <= 0.20) {
     return true;
   } else {
     return false;
