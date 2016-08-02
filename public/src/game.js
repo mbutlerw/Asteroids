@@ -30,8 +30,8 @@ Game.prototype = {
   },
   collisionDetection: function() {
     var bodies = this.bodies;
-    var self = this
-    var newbodies = []
+    var self = this;
+    var newbodies = [];
     var NotcollidingWithAnything = function(b1) {
 
 
@@ -39,6 +39,10 @@ Game.prototype = {
         return true
       } else {
           if (b1.type === "asteroid") {
+            if (randomPowerUpChecker() === true) {
+              newbodies.push(new Powerup(self.gameSize, { x:b1.center.x, y: b1.center.y }, 10))
+              console.log(bodies);
+            }
             if (b1.size.x >= 70) {
               sounds.largeExplosion.play()
               for(let i = 0; i < 3; i++) {
@@ -48,7 +52,7 @@ Game.prototype = {
             } else if (b1.size.x >= 30) {
               sounds.mediumExplosion.play()
               for(let i = 0; i < 3; i++) {
-                var size = randomNumberFromRange(10, 15)
+                var size = randomNumberFromRange(10, 15);
                 newbodies.push(new Asteroid(self.gameSize, { x:b1.center.x + i, y: b1.center.y + i}, { x: size, y: size}))
               }
             } else {

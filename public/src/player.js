@@ -9,6 +9,7 @@ function Player(game, gameSize) {
     this.gameSize = gameSize;
     this.overHeated = 0;
     this.lifeSpan = 1;
+    this.poweredUp = 0;
     this.vertices = [
           { x: this.center.x, y: this.center.y - this.size.y / 2},
           { x: this.center.x + this.size.x / 2, y: this.center.y + this.size.y / 2},
@@ -18,6 +19,8 @@ function Player(game, gameSize) {
 
   Player.prototype = {
     update: function() {
+      if (this.poweredUp > 0) { this.poweredUp -= 1; }
+
       var angle = ((this.angle - 90) * Math.PI) / 180;
 
       if (this.overHeated > 0) {this.overHeated -= 1;}
@@ -35,9 +38,21 @@ function Player(game, gameSize) {
       }
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.SPACE) && this.overHeated === 0) {
-        var bullet = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle) * 10 + this.velocity.x, y: Math.sin(angle) * 10 + this.velocity.y}, this.gameSize);
-        this.game.addBody(bullet);
-        this.overHeated = 20;
+        console.log(this.poweredUp);
+        if (this.poweredUp > 0) {
+          var bullet1 = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle - 0.1) * 10 + this.velocity.x, y: Math.sin(angle - 0.1) * 10 + this.velocity.y}, this.gameSize);
+          var bullet2 = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle) * 10 + this.velocity.x, y: Math.sin(angle) * 10 + this.velocity.y}, this.gameSize);
+          var bullet3 = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle + 0.1) * 10 + this.velocity.x, y: Math.sin(angle + 0.1) * 10 + this.velocity.y}, this.gameSize);
+          this.game.addBody(bullet1);
+          this.game.addBody(bullet2);
+          this.game.addBody(bullet3);
+          this.overHeated = 20;
+        }
+        else {
+          var bullet = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle) * 10 + this.velocity.x, y: Math.sin(angle) * 10 + this.velocity.y}, this.gameSize);
+          this.game.addBody(bullet);
+          this.overHeated = 20;
+        }
       }
 
       this.center.x += this.velocity.x
