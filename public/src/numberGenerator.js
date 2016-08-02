@@ -36,3 +36,12 @@ var calcNextVertexCoord = function (vertex, center, rotation) {
 var degToRad = function (degrees) {
 	return degrees * (Math.PI/180)
 }
+
+var randomPowerUpChecker = function() {
+  var num = Math.random();
+  if (num <= 0.20) {
+    return true;
+  } else {
+    return false;
+  }
+}

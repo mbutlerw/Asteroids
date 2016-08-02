@@ -6,13 +6,18 @@ var colliding = function(b1, b2) {
          (b1 instanceof Asteroid && b2 instanceof Asteroid) ||
          (b1 instanceof Player && b2 instanceof Bullet) ||
          (b1 instanceof Bullet && b2 instanceof Player) ||
+         (b1 instanceof Bullet && b2 instanceof Bullet) ||
+         (b1 instanceof Powerup && b2 instanceof Asteroid) ||
+         (b1 instanceof Asteroid && b2 instanceof Powerup) ||
+         (b1 instanceof Bullet && b2 instanceof Powerup) ||
+         (b1 instanceof Powerup && b2 instanceof Bullet) ||
+         (b1 instanceof Powerup && b2 instanceof Powerup) ||
+         (b1 instanceof Player && b2 instanceof Powerup) ||
          b1.center.x + b1.size.x < b2.center.x - b2.size.x ||
          b1.center.y + b1.size.y < b2.center.y - b2.size.y  ||
          b1.center.x - b1.size.x > b2.center.x + b2.size.x  ||
          b1.center.y - b1.size.y > b2.center.y + b2.size.y
         )
-
-
 
     if (!initcheck) {
 

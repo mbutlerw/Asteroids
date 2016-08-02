@@ -45,8 +45,9 @@ Game.prototype = {
   },
   collisionDetection: function() {
     var bodies = this.bodies;
-    var self = this
-    var newBodies = []
+    var self = this;
+    var newBodies = [];
+
     var NotcollidingWithAnything = function(b1) {
 
 
@@ -54,6 +55,9 @@ Game.prototype = {
         return true
       } else {
           if (b1.type === "asteroid") {
+            if (randomPowerUpChecker() === true) {
+              newBodies.push(new Powerup(self.gameSize, { x:b1.center.x, y: b1.center.y }, 10))
+            }
             if (b1.size.x >= 70) {
               sounds.largeExplosion.play()
               for(let i = 0; i < 3; i++) {
@@ -63,6 +67,7 @@ Game.prototype = {
             } else if (b1.size.x >= 30) {
               sounds.mediumExplosion.play()
               for(let i = 0; i < 3; i++) {
+
                 var size = randomNumberFromRange(10, 15)
                 newBodies.push(new Asteroid(self.gameSize, { x:b1.center.x + i, y: b1.center.y + i}, { x: size, y: size}))
               }
@@ -70,7 +75,13 @@ Game.prototype = {
               sounds.smallExplosion.play()
             }
 
-          } else if (b1.type === "player"){
+          } else if (b1.type === "powerup") {
+              var player = bodies.filter(function(body){
+                return body.type === 'player';
+              })[0]
+            player.poweredUp += 480;
+
+          } else if (b1.type === "player") {
             b1.center = { x: 400, y: 300}
             b1.velocity = {x: 0, y: 0}
             b1.angle = 0
@@ -80,14 +91,12 @@ Game.prototype = {
               self.respawnTime = 120
               self.deadBodies.push(b1)
             }
-
           }
-        }
       };
 
 
+  }
     this.bodies = (this.bodies.filter(NotcollidingWithAnything).concat(newBodies))
-
 
     this.bodies = this.bodies.filter(function(body) {
       return body.lifeSpan > 0;
