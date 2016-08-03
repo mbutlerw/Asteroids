@@ -7,10 +7,10 @@ function Powerup(gameSize, center, size) {
   this.velocity = { x: randomRange(), y: randomRange() };
   this.lifeSpan = 600;
   this.vertices = [
-        { x: this.center.x - this.size / 2, y: this.center.y - this.size / 2},
-        { x: this.center.x + this.size / 2, y: this.center.y - this.size / 2},
-        { x: this.center.x + this.size / 2, y: this.center.y + this.size / 2},
-        { x: this.center.x - this.size / 2, y: this.center.y + this.size / 2}
+        { x: center.x - size.x / 2, y: center.y - size.y / 2},
+        { x: center.x + size.x / 2, y: center.y - size.y / 2},
+        { x: center.x + size.x / 2, y: center.y + size.y / 2},
+        { x: center.x - size.x / 2, y: center.y + size.y / 2}
   ]
 }
 
