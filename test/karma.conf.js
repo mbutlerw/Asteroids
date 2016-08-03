@@ -4,14 +4,15 @@ module.exports = function(config){
     basePath: '../',
 
     files: [
-      'public/src/asteroid.js',
-      'public/src/bullet.js',
-      'public/src/game.js',
-      'public/src/keyboard.js',
-      'public/src/numberGenerator.js',
-      'public/src/player.js',
+      'public/**/!(run-game).js',
       'test/**/*.js'
     ],
+
+    reporters: ['progress', 'coverage'],
+
+    preprocessors: {
+      'public/**/!(run-game).js': ['coverage']
+    },
 
     autoWatch: true,
 
@@ -21,7 +22,13 @@ module.exports = function(config){
 
     plugins: [
       'karma-chrome-launcher',
-      'karma-jasmine'
-    ]
+      'karma-jasmine',
+      'karma-coverage'
+    ],
+
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    }
   });
 };
