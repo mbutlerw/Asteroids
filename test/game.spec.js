@@ -21,7 +21,7 @@ describe("Game", function(){
   });
   describe("draw", function(){
     var body = jasmine.createSpyObj("body", ["draw"]);
-    var screen = jasmine.createSpyObj("screen", ["clearRect"]);
+    var screen = jasmine.createSpyObj("screen", ["clearRect", "strokeText"]);
 
     it("should clear the screen", function(){
       game.draw(screen, gameSize);
@@ -35,20 +35,6 @@ describe("Game", function(){
     });
   });
 
-  describe("bodiesNotColliding", function(){
-    var body1 = {};
-    var body2 = {};
-
-    it("should call draw on a body", function(){
-      spyOn(Game, "colliding").and.returnValue(true);
-
-      game.addBody(body1);
-      game.addBody(body2);
-      game.collisionDetection();
-      expect(game.bodies).toEqual([]);
-    });
-    
-  });
   describe("addBody", function(){
     it("should be able to add body", function(){
       var game = new Game(gameSize);

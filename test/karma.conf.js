@@ -8,6 +8,12 @@ module.exports = function(config){
       'test/**/*.js'
     ],
 
+    reporters: ['progress', 'coverage'],
+
+    preprocessors: {
+      'public/**/!(run-game).js': ['coverage']
+    },
+
     autoWatch: true,
 
     frameworks: ['jasmine'],
@@ -16,7 +22,13 @@ module.exports = function(config){
 
     plugins: [
       'karma-chrome-launcher',
-      'karma-jasmine'
-    ]
+      'karma-jasmine',
+      'karma-coverage'
+    ],
+
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    }
   });
 };
