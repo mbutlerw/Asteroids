@@ -79,7 +79,7 @@ Game.prototype = {
               var player = bodies.filter(function(body){
                 return body.type === 'player';
               })[0]
-            player.poweredUp += 480;
+            if (player.poweredUp < 3600) { player.poweredUp += 480 }
 
           } else if (b1.type === "player") {
             b1.center = { x: 400, y: 300}
