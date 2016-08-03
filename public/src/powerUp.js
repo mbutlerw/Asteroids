@@ -4,20 +4,23 @@ function Powerup(gameSize, center, size) {
   this.gameSize = gameSize
   this.center = center
   this.angle = 0;
-  this.velocity = { x: randomRange(), y: randomRange() };
+  this.velocity = { x: randomVelocity(), y: randomVelocity() };
   this.lifeSpan = 600;
   this.vertices = [
-        { x: center.x - size.x / 2, y: center.y - size.y / 2},
-        { x: center.x + size.x / 2, y: center.y - size.y / 2},
-        { x: center.x + size.x / 2, y: center.y + size.y / 2},
-        { x: center.x - size.x / 2, y: center.y + size.y / 2}
-  ]
+          { x: center.x - size / 2, y: center.y - size / 2},
+          { x: center.x + size / 2, y: center.y - size / 2},
+          { x: center.x + size / 2, y: center.y + size / 2},
+          { x: center.x - size / 2, y: center.y + size / 2}
+    ]
 }
 
 Powerup.prototype = {
   update: function() {
     this.lifeSpan -= 1;
+    this.positioner();
+  },
 
+  positioner: function () {
     this.center.x += this.velocity.x;
     this.center.y += this.velocity.y;
 
@@ -27,8 +30,11 @@ Powerup.prototype = {
           { x: this.center.x + this.size / 2, y: this.center.y + this.size / 2},
           { x: this.center.x - this.size / 2, y: this.center.y + this.size / 2}
     ]
+    this.screenWrapping();
+  },
 
-    if (this.center.x > this.gameSize.x) {
+  screenWrapping: function () {
+     if (this.center.x > this.gameSize.x) {
       this.center.x = 0;
     }
     if (this.center.x < 0) {
@@ -40,7 +46,6 @@ Powerup.prototype = {
     if (this.center.y < 0) {
       this.center.y = this.gameSize.y;
     }
-
   },
 
   draw: function(screen) {
