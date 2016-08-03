@@ -47,12 +47,12 @@ function Player(game, gameSize) {
           this.game.addBody(bullet1);
           this.game.addBody(bullet2);
           this.game.addBody(bullet3);
-          this.overHeated = 2;
+          this.overHeated = 20;
         }
         else {
           var bullet = new Bullet({ x: this.center.x, y: this.center.y}, { x: Math.cos(angle) * 10 + this.velocity.x, y: Math.sin(angle) * 10 + this.velocity.y}, this.gameSize);
           this.game.addBody(bullet);
-          this.overHeated = 2;
+          this.overHeated = 20;
         }
       }
 
