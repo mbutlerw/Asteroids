@@ -36,7 +36,7 @@ var colliding = function(b1, b2) {
           if (doLineSegmentsIntersect(p1, p2, q1, q2)) {return true}
 
         }
-
+        return false;
        }
 
        if (b2 instanceof Bullet) {
@@ -54,7 +54,7 @@ var colliding = function(b1, b2) {
            if (doLineSegmentsIntersect(p1, p2, q1, q2)) {return true}
 
          }
-
+         return false;
         }
 
 
@@ -73,11 +73,11 @@ var colliding = function(b1, b2) {
             } else {
               var q2 = b2.vertices[j+1]
             }
-
             if (doLineSegmentsIntersect(p1, p2, q1, q2)) {return true}
 
           }
         }
+        return false;
       }
     } else {
       return false
