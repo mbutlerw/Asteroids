@@ -10,6 +10,8 @@
     <script src="./src/bullet.js"></script>
     <script src="./src/keyboard.js"></script>
     <script src="./src/numberGenerator.js"></script>
+    <script src="./src/collision.js"></script>
+    <script src="./src/powerup.js"></script>
   </head>
 
   <body>
@@ -21,15 +23,23 @@
   <script>
     window.onload = function() {
       var canvas = document.querySelector("#screen").components["canvas-material"];
-      console.log(canvas);
       var screen = canvas.getContext('2d');
 
       var gameSize = {x: canvas.data.width, y: canvas.data.height } ;
       this.gameSize = {x: canvas.data.width, y: canvas.data.height } ;
+
+      window.sounds = {
+        largeExplosion: new Audio('audio/bangLarge.wav'),
+        smallExplosion: new Audio('audio/bangSmall.wav'),
+        mediumExplosion: new Audio('audio/bangMedium.wav'),
+        thruster: new Audio('audio/thrust.wav'),
+        fire: new Audio('audio/fire.wav')
+      }
+
       var game = new Game(gameSize);
 
       game.addBody(new Player(game, this.gameSize));
-      Asteroid.createAll(gameSize).forEach(function(asteroid) {
+      Asteroid.createAll(gameSize, game.level).forEach(function(asteroid) {
         game.addBody(asteroid);
       });
 
@@ -40,4 +50,5 @@
       },10)
     };
   </script>
+  });
 </html>

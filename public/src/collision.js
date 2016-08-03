@@ -1,7 +1,5 @@
 var colliding = function(b1, b2) {
 
-
-
     var initcheck = (b1 === b2 ||
          (b1 instanceof Asteroid && b2 instanceof Asteroid) ||
          (b1 instanceof Player && b2 instanceof Bullet) ||
