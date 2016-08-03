@@ -19,7 +19,7 @@ var colliding = function(b1, b2) {
          b1.center.y - b1.size.y > b2.center.y + b2.size.y
         )
 
-    if (!initcheck) {
+    if (!initcheck) { 
 
       if (b1 instanceof Bullet) {
         var p1 = b1.center

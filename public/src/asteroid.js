@@ -7,10 +7,10 @@ function Asteroid(gameSize, center, size) {
   this.velocity = { x: randomVelocity(), y: randomVelocity() };
   this.lifeSpan = 1
   this.vertices = [
-          { x: center.x - size / 2, y: center.y - size / 2},
-          { x: center.x + size / 2, y: center.y - size / 2},
-          { x: center.x + size / 2, y: center.y + size / 2},
-          { x: center.x - size / 2, y: center.y + size / 2}
+          { x: center.x - size.x / 2, y: center.y - size.y / 2},
+          { x: center.x + size.x / 2, y: center.y - size.y / 2},
+          { x: center.x + size.x / 2, y: center.y + size.y / 2},
+          { x: center.x - size.x / 2, y: center.y + size.y / 2}
     ]
 }
 
@@ -20,7 +20,7 @@ Asteroid.prototype = {
   },
 
   positioner: function () {
-    
+
     this.center.x += this.velocity.x;
     this.center.y += this.velocity.y;
 
@@ -62,7 +62,7 @@ Asteroid.prototype = {
             { x: centerX + this.size.x / 2, y: centerY - this.size.y / 2},
             { x: centerX + this.size.x / 2, y: centerY + this.size.y / 2},
             { x: centerX - this.size.x / 2, y: centerY + this.size.y / 2}
-      ] 
+      ]
 
     },
 

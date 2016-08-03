@@ -17,12 +17,12 @@ describe("Colliding:", function() {
 
     it("an asteroid and a powerUp cannot collide", function() {
       var asteroid = new Asteroid({x: 800, y: 600}, {x: 400, y: 300}, {x: 10, y: 10});
-      var powerUp = new Powerup({x: 800, y: 600}, {x: 400, y: 300}, {x: 15, y: 15})
+      var powerUp = new Powerup({x: 800, y: 600}, {x: 400, y: 300}, 10)
       expect(colliding(asteroid, powerUp)).toEqual(false);
     });
 
     it("a bullet and a powerUp cannot collide", function() {
-      var powerUp = new Powerup({x: 800, y: 600}, {x: 400, y: 300}, {x: 15, y: 15});
+      var powerUp = new Powerup({x: 800, y: 600}, {x: 400, y: 300}, 10);
       var bullet = new Bullet({x: 385, y: 300}, {x: 10, y: 0});
       expect(colliding(bullet, powerUp)).toEqual(false);
     });
@@ -30,7 +30,7 @@ describe("Colliding:", function() {
     it("a player and a powerUp cannot collide", function() {
       var game = jasmine.createSpyObj("game", [""]);
 
-      var powerUp = new Powerup({x: 800, y: 600}, {x: 400, y: 300}, {x: 15, y: 15});
+      var powerUp = new Powerup({x: 800, y: 600}, {x: 400, y: 300}, 10);
       var player = new Player(game, {x: 800, y: 600});
       expect(colliding(player, powerUp)).toEqual(false);
     });
@@ -77,7 +77,7 @@ describe("Colliding:", function() {
     it("a powerUp and a player can collide", function() {
       var game = jasmine.createSpyObj("game", [""]);
 
-      var powerUp = new Powerup({x: 800, y: 600}, {x: 405, y: 300}, {x: 10, y: 10});
+      var powerUp = new Powerup({x: 800, y: 600}, {x: 405, y: 300}, 10);
       var player = new Player(game, {x: 800, y: 600});
       expect(colliding(powerUp, player)).toEqual(true);
     })

@@ -8,10 +8,10 @@ function Bullet(center, velocity, gameSize) {
   this.lifeSpan = 40;
   this.gameSize = gameSize;
   this.vertices = [
-          { x: center.x - this.size / 2, y: center.y - this.size / 2},
-          { x: center.x + this.size / 2, y: center.y - this.size / 2},
-          { x: center.x + this.size / 2, y: center.y + this.size / 2},
-          { x: center.x - this.size / 2, y: center.y + this.size / 2}
+          { x: center.x - this.size.x / 2, y: center.y - this.size.y / 2},
+          { x: center.x + this.size.x / 2, y: center.y - this.size.y / 2},
+          { x: center.x + this.size.x / 2, y: center.y + this.size.y / 2},
+          { x: center.x - this.size.x / 2, y: center.y + this.size.y / 2}
     ]
 }
 
@@ -24,7 +24,7 @@ Bullet.prototype = {
   positioner: function () {
     this.center.x += this.velocity.x
     this.center.y += this.velocity.y
-    
+
     this.vertices = [
           { x: this.center.x - this.size.x / 2, y: this.center.y - this.size.y / 2},
           { x: this.center.x + this.size.x / 2, y: this.center.y - this.size.y / 2},

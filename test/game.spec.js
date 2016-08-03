@@ -41,7 +41,7 @@ describe("Game", function(){
       var body = jasmine.createSpyObj("body", ["update"]);
 
       game.addBody(body);
-      expect(game.bodies).toEqual([body]);
+      expect(game.liveBodies).toEqual([body]);
     });
   });
 });

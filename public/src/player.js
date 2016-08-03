@@ -69,7 +69,7 @@ function Player(game, gameSize) {
       this.screenWrapping();
 
       var self = this
-     
+
       for (let i = 0; i < this.vertices.length; i++) {
           this.vertices[i] = calcNextVertexCoord(this.vertices[i], self.center, -self.angle)
       }
@@ -137,15 +137,13 @@ function Player(game, gameSize) {
 
       this.drawLives(screen);
 
-      if (this.repairing % 20 < 10) {
-        this.drawRepairFlashing(screen);
-      }
+      this.drawShip(screen);
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
         this.drawThrust(screen);
       }
-    
-      screen.stroke()
+
+      if (this.repairing % 20 < 10) {screen.stroke()}
     },
 
     drawPowerLevel: function (screen) {
@@ -162,10 +160,10 @@ function Player(game, gameSize) {
         screen.lineTo(780 - i * 18 - this.size.x / 2, 25 + this.size.y / 2)
         screen.lineTo(780 - i * 18, 25 - this.size.y / 2)
         screen.strokeStyle = 'white'
-      }  
+      }
     },
 
-    drawRepairFlashing: function (screen) {
+    drawShip: function (screen) {
       screen.moveTo(this.vertices[0].x, this.vertices[0].y);
       screen.lineTo(this.vertices[1].x, this.vertices[1].y);
       screen.lineTo(this.vertices[2].x, this.vertices[2].y);
