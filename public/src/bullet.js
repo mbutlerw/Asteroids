@@ -18,24 +18,25 @@ function Bullet(center, velocity, gameSize) {
 Bullet.prototype = {
   update: function () {
     this.lifeSpan -= 1
-    this.positioner();
-  },
 
-  positioner: function () {
     this.center.x += this.velocity.x
     this.center.y += this.velocity.y
 
     this.screenWrapping();
-    
-    this.vertices = [
-          { x: this.center.x - this.size.x / 2, y: this.center.y - this.size.y / 2},
-          { x: this.center.x + this.size.x / 2, y: this.center.y - this.size.y / 2},
-          { x: this.center.x + this.size.x / 2, y: this.center.y + this.size.y / 2},
-          { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
-    ]
 
+    this.calcVertices()
 
   },
+
+  calcVertices: function () {
+    this.vertices = [
+            { x: this.center.x - this.size.x / 2, y: this.center.y - this.size.y / 2},
+            { x: this.center.x + this.size.x / 2, y: this.center.y - this.size.y / 2},
+            { x: this.center.x + this.size.x / 2, y: this.center.y + this.size.y / 2},
+            { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
+      ]
+
+    },
 
 screenWrapping: function () {
     if (this.center.x - (this.size.x / 2) > this.gameSize.x) {

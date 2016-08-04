@@ -42,7 +42,7 @@ describe("Powerup", function(){
     })
 
     it("should move the player from the bottom of the canvas to the top", function(){
-      var powerup = new Powerup(gameSize, {x: 400, y: 606}, 10)
+      var powerup = new Powerup(gameSize, {x: 400, y: 601}, 10)
       powerup.screenWrapping()
       expect(powerup.center.y).toEqual(0)
     })
