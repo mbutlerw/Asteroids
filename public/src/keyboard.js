@@ -1,16 +1,17 @@
 var Keyboarder = function () {
-  var keyState = {};
+  this.keyState = {};
 
+  var self = this
   window.onkeydown = function(e) {
-    keyState[e.keyCode] = true;
+    self.keyState[e.keyCode] = true;
   };
 
   window.onkeyup = function(e) {
-    keyState[e.keyCode] = false;
+    self.keyState[e.keyCode] = false;
   };
 
   this.isDown = function(keyCode) {
-    return keyState[keyCode] === true;
+    return self.keyState[keyCode] === true;
   };
 
   this.KEYS = { LEFT: 37, RIGHT: 39, SPACE: 32, UP: 38 };
