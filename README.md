@@ -107,3 +107,7 @@ Visualization Mode
 Responsive Canvas Size
 - Game canvas adjusting to user's window-size on initial load
 ```
+```
+Menu / Options
+- Allow user to change parameters of the game (ie. physics, difficulty, colors)
+```
