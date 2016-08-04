@@ -40,7 +40,7 @@ describe("Asteroid", function(){
     })
 
     it("should move the player from the bottom of the canvas to the top", function(){
-      var asteroid = new Asteroid(gameSize, {x: 400, y: 601}, {x: 50, y: 50})
+      var asteroid = new Asteroid(gameSize, {x: 400, y: 626}, {x: 50, y: 50})
       asteroid.screenWrapping()
       expect(asteroid.center.y).toEqual(0)
     })
