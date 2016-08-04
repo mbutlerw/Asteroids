@@ -6,6 +6,7 @@ Final project made as part of the course at Makers Academy.
 
 # App Description
 
+![alt text](https://github.com/mbutlerw/arcade_games/ScreenShot.png "Screen Shot")
 A re-imagined version of the classic arcade game.
 
 # Initial Setup

@@ -1,7 +1,7 @@
 function Game(gameSize) {
   this.gameSize = gameSize;
   this.liveBodies = [];
-  this.level = 1;
+  this.level = 9;
   this.respawnPlayer = false;
   this.deadBodies = []
   this.respawnTime = 0
@@ -137,7 +137,7 @@ Game.prototype = {
 
     Asteroid.createAll(this.gameSize, this.level).forEach(function(asteroid) {
       self.addBody(asteroid);
-    }); 
+    });
   },
 
   levelAdvance: function () {
