@@ -51,7 +51,6 @@ Game.prototype = {
     var newBodies = [];
 
     var NotcollidingWithAnything = function(b1) {
-
       if (bodies.filter (function (b2) { return colliding(b1, b2); }).length === 0) {
 
         return true
@@ -112,7 +111,7 @@ Game.prototype = {
     self = this;
 
     this.liveBodies.forEach(function (body) {
-      if (body.type == 'player') { numberOfPlayers += 1;}
+      if (body.type == 'player') {numberOfPlayers += 1;}
       if (body.type == 'asteroid') {numberOfAsteroids += 1;}
     });
 
