@@ -83,14 +83,4 @@ describe("Powerup", function(){
       expect(screen.restore).toHaveBeenCalled();
     })
   })
-
-  describe("createAll", function() {
-    it("creates # number of powerups", function(){
-      expect(Powerup.createAll({x: 800, y: 600}, 8).length).toEqual(8)
-    })
-
-    it("what is creates are powerups", function(){
-      expect(Powerup.createAll({x: 800, y: 600}, 5)[3] instanceof Powerup).toEqual(true)
-    })
-  })
 });
