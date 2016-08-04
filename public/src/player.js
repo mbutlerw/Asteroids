@@ -75,7 +75,7 @@ function Player(game, gameSize) {
       }
 
       if (this.game.respawnPlayer === true) {
-          this.center = { x: gameSize.x / 2, y: gameSize.y / 2 };
+          this.center = { x: this.gameSize.x / 2, y: this.gameSize.y / 2 };
           this.velocity = { x: 0, y: 0};
           this.game.respawnPlayer = false;
         }
@@ -137,7 +137,7 @@ function Player(game, gameSize) {
 
       this.drawLives(screen);
 
-      this.drawShip(screen);
+      this.drawPlayer(screen);
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.UP)) {
         this.drawThrust(screen);
@@ -163,7 +163,7 @@ function Player(game, gameSize) {
       }
     },
 
-    drawShip: function (screen) {
+    drawPlayer: function (screen) {
       screen.moveTo(this.vertices[0].x, this.vertices[0].y);
       screen.lineTo(this.vertices[1].x, this.vertices[1].y);
       screen.lineTo(this.vertices[2].x, this.vertices[2].y);
