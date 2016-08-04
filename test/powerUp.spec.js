@@ -69,16 +69,14 @@ describe("Powerup", function(){
   describe("draw", function() {
     it("calls draw functions on canvas", function() {
       var powerup = new Powerup(gameSize, {x: 200, y: 200}, 10)
-      var screen = jasmine.createSpyObj("screen", ["clearRect", "strokeText", "lineTo", "moveTo", "beginPath", "save", "stroke", "strokeStyle", "restore"]);
+      var screen = jasmine.createSpyObj("screen", ["beginPath", "save", "stroke", "strokeStyle", "restore", "arc"]);
 
       powerup.draw(screen)
 
       expect(screen.save).toHaveBeenCalled();
+      expect(screen.strokeStyle).toEqual("yellow")
       expect(screen.beginPath).toHaveBeenCalled();
-      expect(screen.moveTo).toHaveBeenCalledWith(175, 175);
-      expect(screen.lineTo).toHaveBeenCalledWith(225, 175);
-      expect(screen.lineTo).toHaveBeenCalledWith(225, 225);
-      expect(screen.lineTo).toHaveBeenCalledWith(175, 225);
+      expect(screen.arc).toHaveBeenCalledWith(200, 200, 5, 0, Math.PI*2, true)
       expect(screen.stroke).toHaveBeenCalled();
       expect(screen.restore).toHaveBeenCalled();
     })

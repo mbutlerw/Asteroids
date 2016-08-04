@@ -66,7 +66,7 @@ describe("Asteroid", function(){
   describe("draw", function() {
     it("calls draw functions on canvas", function() {
       var asteroid = new Asteroid(gameSize, {x: 200, y: 200}, {x: 50, y: 50})
-      var screen = jasmine.createSpyObj("screen", ["clearRect", "strokeText", "lineTo", "moveTo", "beginPath", "save", "stroke", "strokeStyle", "restore"]);
+      var screen = jasmine.createSpyObj("screen", ["lineTo", "moveTo", "beginPath", "save", "stroke", "strokeStyle", "restore"]);
 
       asteroid.draw(screen)
 
@@ -76,6 +76,7 @@ describe("Asteroid", function(){
       expect(screen.lineTo).toHaveBeenCalledWith(225, 175);
       expect(screen.lineTo).toHaveBeenCalledWith(225, 225);
       expect(screen.lineTo).toHaveBeenCalledWith(175, 225);
+      expect(screen.strokeStyle).toEqual("white")
       expect(screen.stroke).toHaveBeenCalled();
       expect(screen.restore).toHaveBeenCalled();
     })
