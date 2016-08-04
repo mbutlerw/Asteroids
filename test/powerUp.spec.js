@@ -13,7 +13,7 @@ describe("Powerup", function(){
 
       powerup.update()
 
-      expect(powerup.angle).toEqual(1)
+      expect(powerup.lifeSpan).toEqual(599)
     })
 
     it("updates the center of the entity by its velocity", function(){
