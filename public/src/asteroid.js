@@ -16,17 +16,14 @@ function Asteroid(gameSize, center, size) {
 
 Asteroid.prototype = {
   update: function() {
-    this.positioner();
-  },
-
-  positioner: function () {
 
     this.center.x += this.velocity.x;
     this.center.y += this.velocity.y;
 
-    this.calcVertices(this.center.x, this.center.y);
-
     this.screenWrapping();
+
+    this.calcVertices();
+
 
     var self = this
     for (let i = 0; i < this.vertices.length; i++) {
@@ -40,28 +37,24 @@ Asteroid.prototype = {
 
     if (this.center.x - (this.size.x / 2) > this.gameSize.x) {
       this.center.x = 0;
-      this.calcVertices(this.center.x, this.center.y);
     }
     if (this.center.x < 0) {
       this.center.x = this.gameSize.x;
-      this.calcVertices(this.center.x, this.center.y);
     }
     if (this.center.y > this.gameSize.y) {
       this.center.y = 0;
-      this.calcVertices(this.center.x, this.center.y);
     }
     if (this.center.y < 0) {
       this.center.y = this.gameSize.y;
-      this.calcVertices(this.center.x, this.center.y);
     }
   },
 
-  calcVertices: function (centerX, centerY) {
+  calcVertices: function () {
     this.vertices = [
-            { x: centerX - this.size.x / 2, y: centerY - this.size.y / 2},
-            { x: centerX + this.size.x / 2, y: centerY - this.size.y / 2},
-            { x: centerX + this.size.x / 2, y: centerY + this.size.y / 2},
-            { x: centerX - this.size.x / 2, y: centerY + this.size.y / 2}
+            { x: this.center.x - this.size.x / 2, y: this.center.y - this.size.y / 2},
+            { x: this.center.x + this.size.x / 2, y: this.center.y - this.size.y / 2},
+            { x: this.center.x + this.size.x / 2, y: this.center.y + this.size.y / 2},
+            { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
       ]
 
     },
