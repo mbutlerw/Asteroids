@@ -1,7 +1,7 @@
 function Game(gameSize) {
   this.gameSize = gameSize;
   this.liveBodies = [];
-  this.level = 9;
+  this.level = 1;
   this.respawnPlayer = false;
   this.deadBodies = []
   this.respawnTime = 0
