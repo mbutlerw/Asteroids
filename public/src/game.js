@@ -109,7 +109,7 @@ Game.prototype = {
     var numberOfPlayers = 0;
     var numberOfAsteroids = 0;
 
-    self = this;
+    var self = this;
 
     this.liveBodies.forEach(function (body) {
       if (body.type == 'player') { numberOfPlayers += 1;}
@@ -131,6 +131,7 @@ Game.prototype = {
   },
 
   gameOverReset: function () {
+    var self = this;
     this.level = 1;
     this.liveBodies = [];
     this.addBody(new Player(this, this.gameSize));
@@ -141,6 +142,8 @@ Game.prototype = {
   },
 
   levelAdvance: function () {
+    var self = this;
+
      this.level += 1;
       this.respawnPlayer = true;
       Asteroid.createAll(this.gameSize, this.level).forEach(function(asteroid) {

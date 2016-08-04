@@ -44,4 +44,30 @@ describe("Game", function(){
       expect(game.liveBodies).toEqual([body]);
     });
   });
+
+  describe("statusCheck", function() {
+    it("should check the number of 'live' entities in the game", function(){
+      var game = new Game(gameSize);
+      game.statusCheck()
+      expect(game.liveBodies.length).toEqual(2);
+
+    });
+  });
+
+   describe("gameOverReset", function () {
+      it("should reset game from level 2 to game level 1", function() {
+      var game = new Game(gameSize);
+      game.levelAdvance()
+      game.gameOverReset()
+      expect(game.level).toEqual(1)
+  }); 
+  });
+
+  describe("levelAdvance", function () {
+    it("should advance game level 1 to game level 2", function() {
+    var game = new Game(gameSize);
+    game.levelAdvance()
+    expect(game.level).toEqual(2)
+  });
+  });  
 });
