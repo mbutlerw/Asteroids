@@ -25,6 +25,8 @@ Bullet.prototype = {
     this.center.x += this.velocity.x
     this.center.y += this.velocity.y
 
+    this.screenWrapping();
+    
     this.vertices = [
           { x: this.center.x - this.size.x / 2, y: this.center.y - this.size.y / 2},
           { x: this.center.x + this.size.x / 2, y: this.center.y - this.size.y / 2},
@@ -32,7 +34,7 @@ Bullet.prototype = {
           { x: this.center.x - this.size.x / 2, y: this.center.y + this.size.y / 2}
     ]
 
-    this.screenWrapping();
+
   },
 
 screenWrapping: function () {

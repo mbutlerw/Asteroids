@@ -24,13 +24,14 @@ Powerup.prototype = {
     this.center.x += this.velocity.x;
     this.center.y += this.velocity.y;
 
+    this.screenWrapping();
+
     this.vertices = [
           { x: this.center.x - this.size / 2, y: this.center.y - this.size / 2},
           { x: this.center.x + this.size / 2, y: this.center.y - this.size / 2},
           { x: this.center.x + this.size / 2, y: this.center.y + this.size / 2},
           { x: this.center.x - this.size / 2, y: this.center.y + this.size / 2}
     ]
-    this.screenWrapping();
   },
 
   screenWrapping: function () {
