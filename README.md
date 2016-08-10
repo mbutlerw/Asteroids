@@ -4,6 +4,8 @@ This project is the result of two week's work between four people. It currently 
 
 Final project made as part of the course at Makers Academy.
 
+Play it here: [http://makeroids.herokuapp.com/](#http://makeroids.herokuapp.com/)
+
 # App Description
 
 ![alt text](https://raw.githubusercontent.com/mbutlerw/arcade_games/master/ScreenShot.png "Screen Shot")
