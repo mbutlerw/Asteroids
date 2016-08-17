@@ -25,25 +25,50 @@
 <script src="./src/powerUp.js"></script>
 
 <style>
+  canvas {
+    float: left
+  }
   #gameCanvas {
     background-image: url('star-background.jpg');
+  }
+
+  #highScores {
+    float: left;
+    margin: 20px
+  }
+
+  #score {
+    list-style-type: none;
+  }
+
+  #input {
+    margin: 10px;
   }
 </style>
 
   <body>
     <canvas id="gameCanvas" width="800" height="600"> </canvas>
+    <div id="highScores" >
+      <label id="input">
+        Name:
+        <input type="text" id='name' value="Player"></input>
+      </label>
+    <ul id="score"></ul>
+    </div>
 
-    <h1> High-Score: <span id="score"></span></h1>
   </body>
   <script>
   var highScores = firebase.database().ref('highscore');
   highScores.on('value', function(snapshot) {
-    var staff = Object.keys(snapshot.val()).map(function (key) {
-        return snapshot.val()[key].level
+    var leaderBoard = Object.keys(snapshot.val()).map(function (key) {
+        return snapshot.val()[key]
     })
-      console.log()
 
-    document.getElementById("score").innerHTML = staff.sort(function compareNumbers(a, b) {return b - a;});
+document.getElementById("score").innerHTML = leaderBoard.sort(function (a, b) { return b.level - a.level })
+    .map(function (entry) {
+    return "<li>" + entry.name + ": " + entry.level + "</li>"
+  })
+
   });
   </script>
 </html>

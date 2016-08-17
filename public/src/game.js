@@ -132,6 +132,7 @@ Game.prototype = {
   gameOverReset: function () {
     var database = firebase.database();
     firebase.database().ref("highscore").push({
+      name: document.getElementById('name').value,
       level: this.level
     })
 
