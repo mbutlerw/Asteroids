@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html>
 
-<canvas id="gameCanvas" width="800" height="600"> </canvas>
+<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDzH1Ewxtt0PqbR9Vf6cZLenj_U9k35KEg",
+    authDomain: "asteroids-highscore.firebaseapp.com",
+    databaseURL: "https://asteroids-highscore.firebaseio.com",
+    storageBucket: "asteroids-highscore.appspot.com",
+  };
+  firebase.initializeApp(config);
+</script>
+
 <script src="./src/audio.js"></script>
 <script src="./src/run-game.js"></script>
 <script src="./src/game.js"></script>
@@ -20,7 +31,19 @@
 </style>
 
   <body>
+    <canvas id="gameCanvas" width="800" height="600"> </canvas>
+
+    <h1> High-Score: <span id="score"></span></h1>
   </body>
   <script>
+  var highScores = firebase.database().ref('highscore');
+  highScores.on('value', function(snapshot) {
+    var staff = Object.keys(snapshot.val()).map(function (key) {
+        return snapshot.val()[key].level
+    })
+      console.log()
+
+    document.getElementById("score").innerHTML = staff.sort(function compareNumbers(a, b) {return b - a;});
+  });
   </script>
 </html>

@@ -130,6 +130,11 @@ Game.prototype = {
   },
 
   gameOverReset: function () {
+    var database = firebase.database();
+    firebase.database().ref("highscore").push({
+      level: this.level
+    })
+
     this.level = 1;
     this.liveBodies = [];
     this.addBody(new Player(this, this.gameSize));
