@@ -2,17 +2,8 @@
 <html>
 
 <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDzH1Ewxtt0PqbR9Vf6cZLenj_U9k35KEg",
-    authDomain: "asteroids-highscore.firebaseapp.com",
-    databaseURL: "https://asteroids-highscore.firebaseio.com",
-    storageBucket: "asteroids-highscore.appspot.com",
-  };
-  firebase.initializeApp(config);
-</script>
 
+<script src="./src/scoreBoard.js"></script>
 <script src="./src/audio.js"></script>
 <script src="./src/run-game.js"></script>
 <script src="./src/game.js"></script>
@@ -37,10 +28,6 @@
     margin: 20px
   }
 
-  #score {
-    list-style-type: none;
-  }
-
   #input {
     margin: 10px;
   }
@@ -53,22 +40,11 @@
         Name:
         <input type="text" id='name' value="Player"></input>
       </label>
-    <ul id="score"></ul>
+    <ol id="score"></ol>
     </div>
 
   </body>
   <script>
-  var highScores = firebase.database().ref('highscore');
-  highScores.on('value', function(snapshot) {
-    var leaderBoard = Object.keys(snapshot.val()).map(function (key) {
-        return snapshot.val()[key]
-    })
 
-document.getElementById("score").innerHTML = leaderBoard.sort(function (a, b) { return b.level - a.level })
-    .map(function (entry) {
-    return "<li>" + entry.name + ": " + entry.level + "</li>"
-  })
-
-  });
   </script>
 </html>
