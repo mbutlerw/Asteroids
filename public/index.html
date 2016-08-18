@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 
-<canvas id="gameCanvas" width="800" height="600"> </canvas>
+<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+
+<script src="./src/scoreBoard.js"></script>
 <script src="./src/audio.js"></script>
 <script src="./src/run-game.js"></script>
 <script src="./src/game.js"></script>
@@ -14,13 +16,35 @@
 <script src="./src/powerUp.js"></script>
 
 <style>
+  canvas {
+    float: left
+  }
   #gameCanvas {
     background-image: url('star-background.jpg');
+  }
+
+  #highScores {
+    float: left;
+    margin: 20px
+  }
+
+  #input {
+    margin: 10px;
   }
 </style>
 
   <body>
+    <canvas id="gameCanvas" width="800" height="600"> </canvas>
+    <div id="highScores" >
+      <label id="input">
+        Name:
+        <input type="text" id='name' value="Player"></input>
+      </label>
+    <ol id="score"></ol>
+    </div>
+
   </body>
   <script>
+
   </script>
 </html>

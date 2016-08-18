@@ -130,6 +130,9 @@ Game.prototype = {
   },
 
   gameOverReset: function () {
+
+    submitScore(this.level)
+
     this.level = 1;
     this.liveBodies = [];
     this.addBody(new Player(this, this.gameSize));
