@@ -24,7 +24,7 @@ highScores.on('value', function(snapshot) {
   })
 
 
-  var sortedLeaderBoard = leaderBoard.slice(0, 9).sort(function (a, b) { return b.level - a.level })
+  var sortedLeaderBoard = leaderBoard.sort(function (a, b) { return b.level - a.level }).slice(0, 10)
 
 
 document.getElementById("score").innerHTML = sortedLeaderBoard.map(function (entry) {
